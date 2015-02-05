@@ -24,16 +24,16 @@
             <thead>
                 <tr>
                     <th>Quantity</th>
-                    <th>Title</th>
-                    <th>Type</th>
-                    <th>Subtype</th>
-                    <th>Cost</th>
-                    <th>Influence</th>
-                    <th>Faction</th>
+                    <th ng-click="orderProp = 'title'">Title</th>
+                    <th ng-click="orderProp = 'type'">Type</th>
+                    <th ng-click="orderProp = 'subtype'">Subtype</th>
+                    <th ng-click="orderProp = 'cost'">Cost</th>
+                    <th ng-click="orderProp = 'influence'">Influence</th>
+                    <th ng-click="orderProp = 'faction'">Faction</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="card in allCards">
+                <tr ng-repeat="card in allCards | orderBy:orderProp">
                     <td>X</td>
                     <td>{{ card.title }}</td>
                     <td>{{ card.type }}</td>

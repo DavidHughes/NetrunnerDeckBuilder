@@ -9,4 +9,6 @@ deckBuilder.controller('DeckBuilderCtrl', ['$scope', '$http', function($scope, $
         $scope.allCards = data.netrunnerCards;
         console.log(data.netrunnerCards);
     });
+
+    $scope.orderProp = 'faction';
 }]);
