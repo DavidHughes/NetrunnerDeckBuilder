@@ -1,7 +1,6 @@
-'use strict';
-var deckBuilder = angular.module('deckBuilder', []);
-
-deckBuilder.controller('DeckBuilderCtrl', ['$scope', '$http', function($scope, $http) {
+(function($, window, undefined) {
+  'use strict';
+  window.deckBuilder.controller('DeckBuilderController', ['$scope', '$http', function($scope, $http) {
     $http({
         method: 'GET',
         url: 'data/allCards.json'
@@ -11,4 +10,5 @@ deckBuilder.controller('DeckBuilderCtrl', ['$scope', '$http', function($scope, $
     });
 
     $scope.orderProp = 'faction';
-}]);
+  }]);
+})(jQuery, this);
