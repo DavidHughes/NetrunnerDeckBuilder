@@ -34,8 +34,8 @@ module.exports = function (grunt) {
         tasks: ['bowerInstall']
       },
       js: {
-        files: ['<%= config.app %>/scripts/{,*/}*.js'],
-        tasks: ['jshint'],
+        files: ['<%= config.app %>/scripts/src/{,*/}*.js'],
+        tasks: ['jshint', 'concat'],
         options: {
           livereload: true
         }
@@ -306,7 +306,7 @@ module.exports = function (grunt) {
     // },
     concat: {
       dist: {
-        src: ['app/scripts/main.js', 'app/scripts/controllers/*.js'],
+        src: ['app/scripts/init.js', 'app/scripts/controllers/*.js'],
         dest: 'app/scripts/main.js'
       }
     },
@@ -369,6 +369,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'concat',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',

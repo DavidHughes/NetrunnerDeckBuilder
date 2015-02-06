@@ -10,5 +10,12 @@
     });
 
     $scope.orderProp = 'faction';
+
+    $scope.addCard = function(card) {
+      card.quantity = card.quantity ? card.quantity++ : 1;
+      console.log(card);
+    };
+
+    $scope.deckStatus = {};
   }]);
 })(jQuery, this);
