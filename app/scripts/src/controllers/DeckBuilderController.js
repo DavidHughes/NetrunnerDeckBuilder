@@ -6,7 +6,6 @@
         url: 'data/allCards.json'
     }).success(function(data) {
         $scope.allCards = data.netrunnerCards;
-        console.log(data.netrunnerCards);
     });
 
     $scope.orderProp = 'faction';
