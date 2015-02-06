@@ -35,12 +35,12 @@
             <tbody>
                 <tr ng-repeat="card in allCards | orderBy:orderProp">
                     <td>X</td>
-                    <td>{{ card.title }}</td>
-                    <td>{{ card.type }}</td>
-                    <td>{{ card.subtype }}</td>
-                    <td>{{ card.cost }}</td>
-                    <td>{{ card.influence }}</td>
-                    <td>{{ card.faction }}</td>
+                    <td><span ng-bind="card.title"></span></td>
+                    <td><span ng-bind="card.type"></span></td>
+                    <td><span ng-bind="card.subtype"></span></td>
+                    <td><span ng-bind="card.cost"></span></td>
+                    <td><span ng-bind="card.influence"></span></td>
+                    <td><span ng-bind="card.faction"></span></td>
                 </tr>
             </tbody>
         </table>
