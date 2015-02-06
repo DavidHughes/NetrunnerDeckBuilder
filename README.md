@@ -6,5 +6,5 @@ TODO:
     Deck Selection
       - List existing decks
       - Create new:
-        - Based off old one
+        - Based off old one (view deck diff?)
         - From scratch
