@@ -40,16 +40,16 @@
                 <thead>
                     <tr>
                         <th>Quantity</th>
-                        <th ng-click="orderProp = 'title'">Title</th>
-                        <th ng-click="orderProp = 'type'">Type</th>
-                        <th ng-click="orderProp = 'subtype'">Subtype</th>
-                        <th ng-click="orderProp = 'cost'">Cost</th>
-                        <th ng-click="orderProp = 'influence'">Influence</th>
-                        <th ng-click="orderProp = 'faction'">Faction</th>
+                        <th ng-click="reverse = orderProp === 'title' ? !reverse : false; orderProp = 'title';">Title</th>
+                        <th ng-click="reverse = orderProp === 'type' ? !reverse : false; orderProp = 'type'">Type</th>
+                        <th ng-click="reverse = orderProp === 'subtype' ? !reverse : false; orderProp = 'subtype'">Subtype</th>
+                        <th ng-click="reverse = orderProp === 'cost' ? !reverse : false; orderProp = 'cost'">Cost</th>
+                        <th ng-click="reverse = orderProp === 'influence' ? !reverse : false; orderProp = 'influence'">Influence</th>
+                        <th ng-click="reverse = orderProp === 'faction' ? !reverse : false; orderProp = 'faction'">Faction</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="card in allCards | orderBy:orderProp">
+                    <tr ng-repeat="card in allCards | orderBy : orderProp : reverse">
                         <td>
                             <button type="button" ng-click="$parent.removeCard(card)">
                                 <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
