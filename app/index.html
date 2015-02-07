@@ -19,8 +19,17 @@
         <!--[if lt IE 10]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+    <div ng-controller="DeckBuilderController">
+        <div>
+            Deck list:
+            <ul>
+                <li ng-repeat="(code, entry) in deckStatus | filter: entry.quantity">
+                    <span ng-bind="entry.quantity"></span> x <span ng-bind="entry.details.title"></span>
+                </li>
+            </ul>
+        </div>
 
-        <table class="table" ng-controller="DeckBuilderController">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Quantity</th>
@@ -54,6 +63,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
 
 
 

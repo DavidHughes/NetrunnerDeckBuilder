@@ -19,7 +19,7 @@
       }
 
       $scope.deckStatus[card.code] = {
-        card: card,
+        details: card,
         quantity: newQuantity
       };
     };
@@ -35,10 +35,16 @@
         newQuantity = 0;
       }
 
-      $scope.deckStatus[card.code] = {
-        card: card,
-        quantity: newQuantity
-      };
+      if ($scope.deckStatus[card.code]) {
+        if (newQuantity) {
+          $scope.deckStatus[card.code] = {
+            details: card,
+            quantity: newQuantity
+          };
+        } else {
+          delete $scope.deckStatus[card.code];
+        }
+      }
     };
 
      /**
