@@ -27,6 +27,7 @@
           details: card,
           quantity: newQuantity
         };
+        $scope.deckStatus.updateCardCount();
       }
     };
 
@@ -50,6 +51,7 @@
         } else {
           delete $scope.deckStatus.card[card.code];
         }
+        $scope.deckStatus.updateCardCount();
       }
     };
 
@@ -59,10 +61,21 @@
       * - quantity
       */
     $scope.deckStatus = {
-      isEmpty: function() {
-        return Object.keys($scope.deckStatus.card).length;
+      updateCardCount: function() {
+        var usedCards = Object.keys($scope.deckStatus.card),
+          quantity = 0;
+          console.log(usedCards);
+
+          for (var code in usedCards) {
+            console.log(usedCards[code]);
+            quantity += $scope.deckStatus.card[usedCards[code]].quantity;
+          }
+
+          $scope.deckStatus.totalCards = quantity;
+          console.log($scope.deckStatus.totalCards);
       },
-      card: {}
+      card: {},
+      totalCards: 0
     };
   }]);
 })(jQuery, this, window.deckBuilder);

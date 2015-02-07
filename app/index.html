@@ -21,7 +21,8 @@
         <![endif]-->
 
         <div ng-controller="DeckBuilderController">
-            <div ng-show="deckStatus.isEmpty()">
+            <div ng-show="deckStatus.totalCards">
+                <p>Cards used: <span ng-bind="deckStatus.totalCards"></span></p>
                 Deck list:
                 <ul>
                     <li ng-repeat="(code, entry) in deckStatus.card | filter: entry.quantity">
@@ -29,7 +30,7 @@
                     </li>
                 </ul>
             </div>
-            <div ng-hide="deckStatus.isEmpty()">
+            <div ng-hide="deckStatus.totalCards">
               <p>Hello! Your deck is empty.</p>
             </div>
 
