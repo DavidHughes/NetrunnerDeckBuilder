@@ -64,15 +64,12 @@
       updateCardCount: function() {
         var usedCards = Object.keys($scope.deckStatus.card),
           quantity = 0;
-          console.log(usedCards);
 
           for (var code in usedCards) {
-            console.log(usedCards[code]);
             quantity += $scope.deckStatus.card[usedCards[code]].quantity;
           }
 
           $scope.deckStatus.totalCards = quantity;
-          console.log($scope.deckStatus.totalCards);
       },
       card: {},
       totalCards: 0
