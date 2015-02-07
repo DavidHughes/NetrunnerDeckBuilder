@@ -76,6 +76,7 @@
           }
 
           $scope.deckStatus.totalCards = quantity;
+          $scope.deckStatus.updateRequiredAgendaPoints();
       },
       updateAgendaPoints: function(agendaPoints, isDecreased) {
         if (isDecreased) {
@@ -84,9 +85,21 @@
           $scope.deckStatus.agendaPoints += agendaPoints;
         }
       },
+      updateRequiredAgendaPoints: function() {
+        var minimumAgendaPoints = 18;
+
+        // TODO: Need to pull in the minimum cards from used identity i.e. for NBN:TWIY
+        if ($scope.deckStatus.totalCards > 39) {
+          // Caution: MATHS
+          minimumAgendaPoints += (Math.floor(($scope.deckStatus.totalCards - 40) / 5) * 2);
+        }
+
+        $scope.deckStatus.requiredAgendaPoints = [minimumAgendaPoints, minimumAgendaPoints + 1];
+      },
       card: {},
       totalCards: 0,
-      agendaPoints: 0
+      agendaPoints: 0,
+      requiredAgendaPoints: [18, 19]
     };
   }]);
 })(jQuery, this, window.deckBuilder);
