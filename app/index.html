@@ -34,8 +34,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="card in allCards | orderBy:orderProp">
-                    <td>X</td>
-                    <td><span ng-bind="card.title"></span></td>
+                    <td>W</td>
+                    <td><span ng-bind="card.title" ng-click="$parent.addCard(card)"></span></td>
                     <td><span ng-bind="card.type"></span></td>
                     <td><span ng-bind="card.subtype"></span></td>
                     <td><span ng-bind="card.cost"></span></td>
@@ -77,6 +77,7 @@
         <script src="../bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/collapse.js"></script>
         <script src="../bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tab.js"></script>
         <script src="../bower_components/angular/angular.js"></script>
+        <script src="../bower_components/angular-route/angular-route.js"></script>
         <!-- endbuild -->
 
         <!-- build:js({app,.tmp}) scripts/main.js -->

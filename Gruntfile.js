@@ -306,7 +306,12 @@ module.exports = function (grunt) {
     // },
     concat: {
       dist: {
-        src: ['app/scripts/src/init.js', 'app/scripts/src/controllers/*.js'],
+        src: [
+          'app/scripts/src/init.js',
+          'app/scripts/src/config/*.js',
+          'app/scripts/src/services/*.js',
+          'app/scripts/src/controllers/*.js'
+        ],
         dest: 'app/scripts/main.js'
       }
     },
