@@ -28,6 +28,9 @@
           quantity: newQuantity
         };
         $scope.deckStatus.updateCardCount();
+        if (card.agendapoints) {
+          $scope.deckStatus.updateAgendaPoints(card.agendapoints);
+        }
       }
     };
 
@@ -52,6 +55,9 @@
           delete $scope.deckStatus.card[card.code];
         }
         $scope.deckStatus.updateCardCount();
+        if (card.agendapoints) {
+          $scope.deckStatus.updateAgendaPoints(card.agendapoints, true);
+        }
       }
     };
 
@@ -71,8 +77,16 @@
 
           $scope.deckStatus.totalCards = quantity;
       },
+      updateAgendaPoints: function(agendaPoints, isDecreased) {
+        if (isDecreased) {
+          $scope.deckStatus.agendaPoints -= agendaPoints;
+        } else {
+          $scope.deckStatus.agendaPoints += agendaPoints;
+        }
+      },
       card: {},
-      totalCards: 0
+      totalCards: 0,
+      agendaPoints: 0
     };
   }]);
 })(jQuery, this, window.deckBuilder);

@@ -23,7 +23,8 @@
         <div ng-controller="DeckBuilderController">
             <div ng-show="deckStatus.totalCards">
                 <p>Cards used: <span ng-bind="deckStatus.totalCards"></span></p>
-                Deck list:
+                <p ng-show="deckStatus.agendaPoints">Agenda points: <span ng-bind="deckStatus.agendaPoints"></span></p>
+                <p>Deck list:</p>
                 <ul>
                     <li ng-repeat="(code, entry) in deckStatus.card | filter: entry.quantity">
                         <span ng-bind="entry.quantity"></span> x <span ng-bind="entry.details.title"></span>
