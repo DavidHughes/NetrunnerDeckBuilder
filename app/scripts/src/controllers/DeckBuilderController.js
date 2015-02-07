@@ -7,6 +7,14 @@
 
     $scope.orderProp = 'faction';
 
+    /**
+     * Adds a card to the deckStatus object.
+     *
+     * If deckStatus already has an entry for the card, the quantity is increased.
+     * If the quantity is at 3 already, there is no change.
+     * @param card to be added
+     * @return void
+     */
     $scope.addCard = function(card) {
       var newQuantity = 1;
 
@@ -14,14 +22,12 @@
         newQuantity = $scope.deckStatus[card.code].quantity + 1;
       }
 
-      if (newQuantity > 3) {
-        newQuantity = 3;
+      if (newQuantity <= 3) {
+        $scope.deckStatus[card.code] = {
+          details: card,
+          quantity: newQuantity
+        };
       }
-
-      $scope.deckStatus[card.code] = {
-        details: card,
-        quantity: newQuantity
-      };
     };
 
     $scope.removeCard = function(card) {
