@@ -18,12 +18,12 @@
     $scope.addCard = function(card) {
       var newQuantity = 1;
 
-      if ($scope.deckStatus[card.code]) {
-        newQuantity = $scope.deckStatus[card.code].quantity + 1;
+      if ($scope.deckStatus.card[card.code]) {
+        newQuantity = $scope.deckStatus.card[card.code].quantity + 1;
       }
 
       if (newQuantity <= 3) {
-        $scope.deckStatus[card.code] = {
+        $scope.deckStatus.card[card.code] = {
           details: card,
           quantity: newQuantity
         };
@@ -33,22 +33,22 @@
     $scope.removeCard = function(card) {
       var newQuantity = 0;
 
-      if ($scope.deckStatus[card.code]) {
-        newQuantity = $scope.deckStatus[card.code].quantity - 1;
+      if ($scope.deckStatus.card[card.code]) {
+        newQuantity = $scope.deckStatus.card[card.code].quantity - 1;
       }
 
       if (newQuantity < 0) {
         newQuantity = 0;
       }
 
-      if ($scope.deckStatus[card.code]) {
+      if ($scope.deckStatus.card[card.code]) {
         if (newQuantity) {
-          $scope.deckStatus[card.code] = {
+          $scope.deckStatus.card[card.code] = {
             details: card,
             quantity: newQuantity
           };
         } else {
-          delete $scope.deckStatus[card.code];
+          delete $scope.deckStatus.card[card.code];
         }
       }
     };
@@ -58,6 +58,11 @@
       * - card object
       * - quantity
       */
-    $scope.deckStatus = {};
+    $scope.deckStatus = {
+      isEmpty: function() {
+        return Object.keys($scope.deckStatus.card).length;
+      },
+      card: {}
+    };
   }]);
 })(jQuery, this, window.deckBuilder);
