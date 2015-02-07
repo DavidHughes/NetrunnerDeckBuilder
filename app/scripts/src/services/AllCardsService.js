@@ -5,7 +5,6 @@
     var allCards = null;
 
     var promise = $http.get('data/allCards.json').success(function (json) {
-      console.log(json);
       allCards = json;
     });
 
