@@ -34,7 +34,17 @@
             </thead>
             <tbody>
                 <tr ng-repeat="card in allCards | orderBy:orderProp">
-                    <td>W</td>
+                    <td>
+                        <button type="button" ng-click="$parent.removeCard(card)">
+                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                            <span class="sr-only">-</span>
+                        </button>
+                        <span ng-bind="$parent.deckStatus[card.code].quantity || 0"></span>
+                        <button type="button" ng-click="$parent.addCard(card)">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            <span class="sr-only">+</span>
+                        </button>
+                    </td>
                     <td><span ng-bind="card.title" ng-click="$parent.addCard(card)"></span></td>
                     <td><span ng-bind="card.type"></span></td>
                     <td><span ng-bind="card.subtype"></span></td>
