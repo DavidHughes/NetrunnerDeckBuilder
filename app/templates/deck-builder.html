@@ -1,5 +1,4 @@
 <div ng-controller="DeckBuilderController">
-  {{ deckId }}
   <div ng-show="deckStatus.totalCards">
     <p>Cards used: <span ng-bind="deckStatus.totalCards"></span></p>
     <p ng-show="deckStatus.agendaPoints">
@@ -14,8 +13,6 @@
   <div ng-hide="deckStatus.totalCards">
     <p>Hello! Your deck is empty.</p>
   </div>
-
-  <label for="deck-name">Deck name: </label><input name="deck-name" type="text" ng-model="deckStatus.name"></input>
 
   <button type="button" ng-click="saveDeck()">Save it!</button>
 

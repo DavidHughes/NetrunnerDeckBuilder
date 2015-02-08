@@ -2,11 +2,8 @@
   'use strict';
   deckBuilder.controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
     if ($routeParams.deckId) {
-      console.log('deckId: ' + $routeParams.deckId);
-      console.log('Loading deck...');
       $scope.deckStatus = UserDecksService.getDecks()[$routeParams.deckId];
     } else {
-      console.log('New deck!');
       $scope.deckStatus = {
         updateCardCount: function() {
           var usedCards = Object.keys($scope.deckStatus.card),
