@@ -20,57 +20,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div ng-controller="DeckBuilderController">
-            <div ng-show="deckStatus.totalCards">
-                <p>Cards used: <span ng-bind="deckStatus.totalCards"></span></p>
-                <p ng-show="deckStatus.agendaPoints">
-                  Agenda points: <span ng-bind="deckStatus.agendaPoints"></span> (out of either <span ng-bind="deckStatus.requiredAgendaPoints"></span>)</p>
-                <p>Deck list:</p>
-                <ul>
-                    <li ng-repeat="(code, entry) in deckStatus.card | filter: entry.quantity">
-                        <span ng-bind="entry.quantity"></span> x <span ng-bind="entry.details.title"></span>
-                    </li>
-                </ul>
-            </div>
-            <div ng-hide="deckStatus.totalCards">
-              <p>Hello! Your deck is empty.</p>
-            </div>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Quantity</th>
-                        <th ng-click="reverse = orderProp === 'title' ? !reverse : false; orderProp = 'title';">Title</th>
-                        <th ng-click="reverse = orderProp === 'type' ? !reverse : false; orderProp = 'type'">Type</th>
-                        <th ng-click="reverse = orderProp === 'subtype' ? !reverse : false; orderProp = 'subtype'">Subtype</th>
-                        <th ng-click="reverse = orderProp === 'cost' ? !reverse : false; orderProp = 'cost'">Cost</th>
-                        <th ng-click="reverse = orderProp === 'influence' ? !reverse : false; orderProp = 'influence'">Influence</th>
-                        <th ng-click="reverse = orderProp === 'faction' ? !reverse : false; orderProp = 'faction'">Faction</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="card in allCards | orderBy : orderProp : reverse">
-                        <td>
-                            <button type="button" ng-click="$parent.removeCard(card)">
-                                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                                <span class="sr-only">-</span>
-                            </button>
-                            <span ng-bind="$parent.deckStatus.card[card.code].quantity || 0"></span>
-                            <button type="button" ng-click="$parent.addCard(card)">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                <span class="sr-only">+</span>
-                            </button>
-                        </td>
-                        <td><span ng-bind="card.title" ng-click="$parent.addCard(card)"></span></td>
-                        <td><span ng-bind="card.type"></span></td>
-                        <td><span ng-bind="card.subtype"></span></td>
-                        <td><span ng-bind="card.cost"></span></td>
-                        <td><span ng-bind="card.influence"></span></td>
-                        <td><span ng-bind="card.faction"></span></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <div ng-view></div>
 
 
 

@@ -1,0 +1,9 @@
+<div ng-controller="DeckManagerController">
+  <ul>
+    <li ng-repeat="deck in allDecks">
+      <a href="#/deck/edit/{{deck.id}}">
+        <span ng-bind="deck.name"></span> [<span ng-bind="deck.id"></span>]
+      </a>
+    </li>
+  </ul>
+</div>
