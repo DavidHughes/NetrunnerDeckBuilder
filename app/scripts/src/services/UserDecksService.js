@@ -21,6 +21,20 @@
       },
       getDecks: function() {
         return allDecks;
+      },
+      buildDeck: function(id) {
+        if (allDecks[id]) {
+          return allDecks[id]
+        } else {
+          return {
+            card: {},
+            totalCards: 0,
+            agendaPoints: 0,
+            requiredAgendaPoints: [18, 19],
+            name: '',
+            id: null
+          };
+        }
       }
     };
   }]);
