@@ -2,7 +2,13 @@
   'use strict';
 
   deckBuilder.factory('UserDecksService', [function() {
-    var allDecks = JSON.parse(localStorage.getItem('allDecks'));
+    var allDecks = {};
+
+    try {
+      allDecks = JSON.parse(localStorage.getItem('allDecks'));
+    } catch (SyntaxError e) {
+      console.log("localStorage is corrupted. Probably needs to be cleared");
+    }
 
     if (!allDecks) {
       allDecks = {};
