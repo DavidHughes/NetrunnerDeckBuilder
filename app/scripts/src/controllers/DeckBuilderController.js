@@ -20,7 +20,10 @@
         $scope.deckStatus.id = (new Date()).getTime().toString();
       }
       UserDecksService.saveDeck($scope.deckStatus);
+      $scope.isDeckSaved = true;
     };
+
+    $scope.isDeckSaved = true;
 
     /**
      * Adds a card to the deckStatus object.
@@ -86,6 +89,8 @@
 
       $scope.deckStatus.totalCards = quantity;
       $scope.updateRequiredAgendaPoints();
+
+      $scope.isDeckSaved = false;
     };
 
     $scope.updateAgendaPoints = function(agendaPoints, isDecreased) {

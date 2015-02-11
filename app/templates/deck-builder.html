@@ -1,6 +1,5 @@
 <div ng-controller="DeckBuilderController">
-  <a ng-href="/">Home</a>
-
+  <a ng-show="isDeckSaved" ng-href="/">Home</a>
   <div ng-show="deckStatus.totalCards">
     <p>Cards used: <span ng-bind="deckStatus.totalCards"></span></p>
     <p ng-show="deckStatus.agendaPoints">
@@ -15,8 +14,8 @@
   <div ng-hide="deckStatus.totalCards">
     <p>Hello! Your deck is empty.</p>
   </div>
-
-  <button type="button" ng-click="saveDeck()">Save it!</button>
+  <label for="save-deck" ng-hide="isDeckSaved">Your deck has unsaved changes</label>
+  <button id="save-deck" type="button" ng-click="saveDeck()">Save it!</button>
 
   <table class="table">
     <thead>
