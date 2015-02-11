@@ -1,10 +1,10 @@
 (function($, window, deckBuilder, undefined) {
   'use strict';
 
-  deckBuilder.factory('AllCardsService', ['$http', function($http) {
+  deckBuilder.factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
     var allCards = null;
 
-    var promise = $http.get('data/allCards.json').success(function (json) {
+    var promise = $http.get(CardsDatabase).success(function (json) {
       allCards = json;
     });
 
