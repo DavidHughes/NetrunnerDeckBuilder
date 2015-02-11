@@ -53,8 +53,8 @@
 
     try {
       allDecks = JSON.parse(localStorage.getItem('allDecks'));
-    } catch (SyntaxError e) {
-      console.log("localStorage is corrupted. Probably needs to be cleared");
+    } catch (e) {
+      console.log('localStorage is corrupted. Probably needs to be cleared');
     }
 
     if (!allDecks) {
@@ -71,7 +71,7 @@
       },
       buildDeck: function(id) {
         if (allDecks[id]) {
-          return allDecks[id]
+          return allDecks[id];
         } else {
           return {
             card: {},
@@ -131,9 +131,9 @@
           details: card,
           quantity: newQuantity
         };
-        $scope.deckStatus.updateCardCount();
+        $scope.updateCardCount();
         if (card.agendapoints) {
-          $scope.deckStatus.updateAgendaPoints(card.agendapoints);
+          $scope.updateAgendaPoints(card.agendapoints);
         }
       }
     };
@@ -158,11 +158,43 @@
         } else {
           delete $scope.deckStatus.card[card.code];
         }
-        $scope.deckStatus.updateCardCount();
+        $scope.updateCardCount();
         if (card.agendapoints) {
-          $scope.deckStatus.updateAgendaPoints(card.agendapoints, true);
+          $scope.updateAgendaPoints(card.agendapoints, true);
         }
       }
+    };
+
+    $scope.updateCardCount = function() {
+      var usedCards = Object.keys($scope.deckStatus.card),
+        quantity = 0;
+
+      for (var code in usedCards) {
+        quantity += $scope.deckStatus.card[usedCards[code]].quantity;
+      }
+
+      $scope.deckStatus.totalCards = quantity;
+      $scope.updateRequiredAgendaPoints();
+    };
+
+    $scope.updateAgendaPoints = function(agendaPoints, isDecreased) {
+      if (isDecreased) {
+        $scope.deckStatus.agendaPoints -= agendaPoints;
+      } else {
+        $scope.deckStatus.agendaPoints += agendaPoints;
+      }
+    };
+
+    $scope.updateRequiredAgendaPoints = function() {
+      var minimumAgendaPoints = 18;
+
+      // TODO: Need to pull in the minimum cards from used identity i.e. for NBN:TWIY
+      if ($scope.deckStatus.totalCards > 39) {
+        // Caution: MATH - https://www.youtube.com/watch?v=gENVB6tjq_M
+        minimumAgendaPoints += (Math.floor(($scope.deckStatus.totalCards - 40) / 5) * 2);
+      }
+
+      $scope.deckStatus.requiredAgendaPoints = [minimumAgendaPoints, minimumAgendaPoints + 1];
     };
   }]);
 })(jQuery, this, window.deckBuilder);

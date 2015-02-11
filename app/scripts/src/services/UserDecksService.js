@@ -6,8 +6,8 @@
 
     try {
       allDecks = JSON.parse(localStorage.getItem('allDecks'));
-    } catch (SyntaxError e) {
-      console.log("localStorage is corrupted. Probably needs to be cleared");
+    } catch (e) {
+      console.log('localStorage is corrupted. Probably needs to be cleared');
     }
 
     if (!allDecks) {
@@ -24,7 +24,7 @@
       },
       buildDeck: function(id) {
         if (allDecks[id]) {
-          return allDecks[id]
+          return allDecks[id];
         } else {
           return {
             card: {},
