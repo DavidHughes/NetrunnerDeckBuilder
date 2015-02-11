@@ -24,7 +24,7 @@
       },
       buildDeck: function(id) {
         if (allDecks[id]) {
-          return allDecks[id];
+          return angular.copy(allDecks[id]);
         } else {
           return {
             card: {},

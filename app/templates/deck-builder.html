@@ -16,6 +16,7 @@
   </div>
   <label for="save-deck" ng-hide="isDeckSaved">Your deck has unsaved changes</label>
   <button id="save-deck" type="button" ng-click="saveDeck()">Save it!</button>
+  <button id="revert-deck" type="button" ng-click="revertDeck()" ng-hide="isDeckSaved && !id">Revert</button>
 
   <table class="table">
     <thead>

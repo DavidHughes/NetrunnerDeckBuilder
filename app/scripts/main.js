@@ -71,7 +71,7 @@
       },
       buildDeck: function(id) {
         if (allDecks[id]) {
-          return allDecks[id];
+          return angular.copy(allDecks[id]);
         } else {
           return {
             card: {},
@@ -109,6 +109,11 @@
         $scope.deckStatus.id = (new Date()).getTime().toString();
       }
       UserDecksService.saveDeck($scope.deckStatus);
+      $scope.isDeckSaved = true;
+    };
+
+    $scope.revertDeck = function() {
+      $scope.deckStatus = UserDecksService.buildDeck($scope.deckStatus.id);
       $scope.isDeckSaved = true;
     };
 

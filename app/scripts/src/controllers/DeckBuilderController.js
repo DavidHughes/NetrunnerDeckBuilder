@@ -23,6 +23,11 @@
       $scope.isDeckSaved = true;
     };
 
+    $scope.revertDeck = function() {
+      $scope.deckStatus = UserDecksService.buildDeck($scope.deckStatus.id);
+      $scope.isDeckSaved = true;
+    };
+
     $scope.isDeckSaved = true;
 
     /**
