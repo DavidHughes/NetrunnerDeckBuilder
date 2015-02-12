@@ -1,13 +1,12 @@
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
-  deckBuilder.controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
+  angular.module('deckBuilder').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
-    if (AllCardsService.hasOwnProperty('promise')) {
-      AllCardsService.promise.success(function(data) {
-        $scope.allCards = data.netrunnerCards;
-      });
-    }
+    AllCardsService.getAllCards().success(function(data) {
+      $scope.allCards = data.netrunnerCards;
+    });
+
     $scope.orderProp = 'faction';
 
     /**

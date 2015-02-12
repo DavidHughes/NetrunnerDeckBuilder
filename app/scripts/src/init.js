@@ -1,4 +1,4 @@
-(function($, window, undefined) {
+(function() {
   'use strict';
-  window.deckBuilder = angular.module('deckBuilder', ['ngRoute']);
-})(jQuery, this);
+  angular.module('deckBuilder', ['ngRoute']);
+})();

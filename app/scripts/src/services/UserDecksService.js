@@ -1,7 +1,7 @@
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
 
-  deckBuilder.factory('UserDecksService', [function() {
+  angular.module('deckBuilder').factory('UserDecksService', [function() {
     var allDecks = {};
 
     try {
@@ -38,4 +38,4 @@
       }
     };
   }]);
-})(jQuery, this, window.deckBuilder);
+})();

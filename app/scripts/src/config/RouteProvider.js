@@ -1,6 +1,6 @@
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
-  deckBuilder.config(['$routeProvider', function($routeProvider){
+  angular.module('deckBuilder').config(['$routeProvider', function($routeProvider){
   $routeProvider
     .when('/', {
       controller: 'DeckManagerController',
@@ -9,11 +9,11 @@
     when('/deck/edit/:deckId', {
       controller: 'DeckBuilderController',
       templateUrl: 'templates/deck-builder.html',
-      resolve:{
+      resolve: {
         'AllCardsService': function(AllCardsService) {
-          return AllCardsService.promise;
+          return AllCardsService;
         }
       }
     });
   }]);
-})(jQuery, this, window.deckBuilder);
+})();

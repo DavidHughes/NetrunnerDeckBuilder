@@ -1,6 +1,6 @@
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
-  deckBuilder.controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
+  angular.module('deckBuilder').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
     $scope.allDecks = UserDecksService.getDecks();
   }]);
-})(jQuery, this, window.deckBuilder);
+})();

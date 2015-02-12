@@ -1,4 +1,4 @@
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
-  deckBuilder.value('CardsDatabase', 'data/allCards.json');
-})(jQuery, this, window.deckBuilder);
+  angular.module('deckBuilder').value('CardsDatabase', 'data/allCards.json');
+})();

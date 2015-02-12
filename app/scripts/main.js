@@ -1,15 +1,16 @@
-(function($, window, undefined) {
+(function() {
   'use strict';
-  window.deckBuilder = angular.module('deckBuilder', ['ngRoute']);
-})(jQuery, this);
+  angular.module('deckBuilder', ['ngRoute']);
+})();
 
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
-  deckBuilder.value('CardsDatabase', 'data/allCards.json');
-})(jQuery, this, window.deckBuilder);
-(function($, window, deckBuilder, undefined) {
+  angular.module('deckBuilder').value('CardsDatabase', 'data/allCards.json');
+})();
+
+(function() {
   'use strict';
-  deckBuilder.config(['$routeProvider', function($routeProvider){
+  angular.module('deckBuilder').config(['$routeProvider', function($routeProvider){
   $routeProvider
     .when('/', {
       controller: 'DeckManagerController',
@@ -18,41 +19,49 @@
     when('/deck/edit/:deckId', {
       controller: 'DeckBuilderController',
       templateUrl: 'templates/deck-builder.html',
-      resolve:{
+      resolve: {
         'AllCardsService': function(AllCardsService) {
-          return AllCardsService.promise;
+          return AllCardsService;
         }
       }
     });
   }]);
-})(jQuery, this, window.deckBuilder);
+})();
 
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
 
-  deckBuilder.factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
+  angular.module('deckBuilder').factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
     var allCards = null;
 
-    var promise = $http.get(CardsDatabase).success(function (json) {
+    $http.get(CardsDatabase).success(function (json) {
       allCards = json;
     });
 
     return {
-      promise: promise,
       setData: function (data) {
           allCards = data;
       },
-      fetch: function () {
-          return allCards.netrunnerCards;
+      getAllCards: function () {
+          return $http.get(CardsDatabase);
+      },
+      getIdentities: function() {
+        return null;
+      },
+      getRunnerIdentities: function() {
+        return null;
+      },
+      getCorpIdentities: function() {
+        return null;
       }
     };
   }]);
-})(jQuery, this, window.deckBuilder);
+})();
 
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
 
-  deckBuilder.factory('UserDecksService', [function() {
+  angular.module('deckBuilder').factory('UserDecksService', [function() {
     var allDecks = {};
 
     try {
@@ -89,18 +98,17 @@
       }
     };
   }]);
-})(jQuery, this, window.deckBuilder);
+})();
 
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
-  deckBuilder.controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
+  angular.module('deckBuilder').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
-    if (AllCardsService.hasOwnProperty('promise')) {
-      AllCardsService.promise.success(function(data) {
-        $scope.allCards = data.netrunnerCards;
-      });
-    }
+    AllCardsService.getAllCards().success(function(data) {
+      $scope.allCards = data.netrunnerCards;
+    });
+
     $scope.orderProp = 'faction';
 
     /**
@@ -213,9 +221,9 @@
   }]);
 })(jQuery, this, window.deckBuilder);
 
-(function($, window, deckBuilder, undefined) {
+(function() {
   'use strict';
-  deckBuilder.controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
+  angular.module('deckBuilder').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
     $scope.allDecks = UserDecksService.getDecks();
   }]);
-})(jQuery, this, window.deckBuilder);
+})();
