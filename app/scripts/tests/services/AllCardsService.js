@@ -38,10 +38,21 @@ describe('AllCardsService', function() {
       expect(mockCardsDatabase).to.equal('data/allCards.json');
     });
 
-
     it('can retrieve all cards', function (done) {
-      AllCardsService.getAllCards().success(function(data) {
+      AllCardsService.getAllCards(function(data) {
         expect(data).to.deep.equal(someCards);
+        done();
+      });
+      httpBackend.flush();
+    });
+
+    it('can retrieve all identities', function(done) {
+      AllCardsService.getIdentities(function(data) {
+        expect(data.netrunnerCards.length).to.equal(2);
+        for (var i = 0; i < 2; i++) {
+          expect(data.netrunnerCards[i].title).to.equal(someCards.netrunnerCards[i].title);
+          expect(data.netrunnerCards[i].type).to.equal('Identity');
+        }
         done();
       });
       httpBackend.flush();

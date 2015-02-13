@@ -1,27 +1,23 @@
 (function() {
   'use strict';
 
-  angular.module('deckBuilder').factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
-    var allCards = null;
-
-    $http.get(CardsDatabase).success(function (json) {
-      allCards = json;
-    });
-
+  angular.module('deckBuilder').factory('AllCardsService', ['$http', 'CardsDatabase', '$filter', function($http, CardsDatabase, $filter) {
     return {
-      setData: function (data) {
-          allCards = data;
+      'getAllCards': function (callback) {
+        return $http.get(CardsDatabase, {'cache': true}).success(callback);
       },
-      getAllCards: function () {
-          return $http.get(CardsDatabase);
+      'getIdentities': function(callback) {
+        return $http.get(CardsDatabase, {'cache': true}).then(function(response) {
+          if (response.status === 200) {
+            response.data.netrunnerCards = $filter('filter')(response.data.netrunnerCards, {type: 'Identity'});
+            callback(response.data);
+          }
+        });
       },
-      getIdentities: function() {
+      'getRunnerIdentities': function() {
         return null;
       },
-      getRunnerIdentities: function() {
-        return null;
-      },
-      getCorpIdentities: function() {
+      'getCorpIdentities': function() {
         return null;
       }
     };

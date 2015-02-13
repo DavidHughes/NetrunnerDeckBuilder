@@ -3,7 +3,7 @@
   angular.module('deckBuilder').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
-    AllCardsService.getAllCards().success(function(data) {
+    AllCardsService.getAllCards(function(data) {
       $scope.allCards = data.netrunnerCards;
     });
 
