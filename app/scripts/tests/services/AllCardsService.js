@@ -57,5 +57,23 @@ describe('AllCardsService', function() {
       });
       httpBackend.flush();
     });
+
+    it('can retrieve all runner identities', function(done) {
+      AllCardsService.getRunnerIdentities(function(data) {
+        expect(data.netrunnerCards.length).to.equal(1);
+        expect(data.netrunnerCards[0].title).to.equal('Noise: Hacker Extraordinaire');
+        done();
+      });
+      httpBackend.flush();
+    });
+
+    it('can retrieve all corp identities', function(done) {
+      AllCardsService.getCorpIdentities(function(data) {
+        expect(data.netrunnerCards.length).to.equal(1);
+        expect(data.netrunnerCards[0].title).to.equal('Jinteki: Personal Evolution');
+        done();
+      });
+      httpBackend.flush();
+    });
   });
 });

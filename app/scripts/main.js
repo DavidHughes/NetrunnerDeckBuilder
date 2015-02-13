@@ -44,11 +44,27 @@
           }
         });
       },
-      'getRunnerIdentities': function() {
-        return null;
+      'getRunnerIdentities': function(callback) {
+        return $http.get(CardsDatabase, {'cache': true}).then(function(response) {
+          if (response.status === 200) {
+            response.data.netrunnerCards = $filter('filter')(response.data.netrunnerCards, {
+              type: 'Identity',
+              side: 'Runner'
+            });
+            callback(response.data);
+          }
+        });
       },
-      'getCorpIdentities': function() {
-        return null;
+      'getCorpIdentities': function(callback) {
+        return $http.get(CardsDatabase, {'cache': true}).then(function(response) {
+          if (response.status === 200) {
+            response.data.netrunnerCards = $filter('filter')(response.data.netrunnerCards, {
+              type: 'Identity',
+              side: 'Corp'
+            });
+            callback(response.data);
+          }
+        });
       }
     };
   }]);
