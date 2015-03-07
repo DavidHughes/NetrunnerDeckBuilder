@@ -41,8 +41,8 @@ module.exports = function (grunt) {
         }
       },
       jstest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['test:watch']
+        files: ['<%= config.app %>/scripts/src/{,*/}*.js', '<%= config.app %>/scripts/tests/{,*/}*.js'],
+        tasks: ['karma:unit:run']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -67,6 +67,14 @@ module.exports = function (grunt) {
       }
     },
 
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        background: true,
+        singleRun: false
+      }
+    },
+
     // The actual grunt server settings
     connect: {
       options: {
@@ -81,20 +89,6 @@ module.exports = function (grunt) {
           middleware: function(connect) {
             return [
               connect.static('.tmp'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
-            ];
-          }
-        }
-      },
-      test: {
-        options: {
-          open: false,
-          port: 9001,
-          middleware: function(connect) {
-            return [
-              connect.static('.tmp'),
-              connect.static('test'),
               connect().use('/bower_components', connect.static('./bower_components')),
               connect.static(config.app)
             ];
@@ -376,6 +370,7 @@ module.exports = function (grunt) {
       'clean:server',
       'concat',
       'concurrent:server',
+      'karma:unit:start',
       'autoprefixer',
       'connect:livereload',
       'watch'
@@ -385,21 +380,6 @@ module.exports = function (grunt) {
   grunt.registerTask('server', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run([target ? ('serve:' + target) : 'serve']);
-  });
-
-  grunt.registerTask('test', function (target) {
-    if (target !== 'watch') {
-      grunt.task.run([
-        'clean:server',
-        'concurrent:test',
-        'autoprefixer'
-      ]);
-    }
-
-    grunt.task.run([
-      'connect:test',
-      'mocha'
-    ]);
   });
 
   grunt.registerTask('build', [
