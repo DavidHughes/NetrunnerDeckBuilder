@@ -233,7 +233,7 @@
       $scope.deckStatus.requiredAgendaPoints = [minimumAgendaPoints, minimumAgendaPoints + 1];
     };
   }]);
-})(jQuery, this, window.deckBuilder);
+})();
 
 (function() {
   'use strict';
