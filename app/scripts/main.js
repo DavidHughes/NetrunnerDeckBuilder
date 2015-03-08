@@ -176,11 +176,7 @@
       var newQuantity = 0;
 
       if ($scope.deckStatus.card[card.code]) {
-        newQuantity = $scope.deckStatus.card[card.code].quantity - 1;
-      }
-
-      if (newQuantity < 0) {
-        newQuantity = 0;
+        newQuantity = Math.max($scope.deckStatus.card[card.code].quantity - 1, 0);
       }
 
       if ($scope.deckStatus.card[card.code]) {
