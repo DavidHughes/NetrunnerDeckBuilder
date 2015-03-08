@@ -46,10 +46,10 @@ describe('DeckBuilderController', function() {
 
   it('can add up to 3 copies of a single card to the current deck', function() {
     var count;
-    for (count = 1; count < 4; count++) {
+    for (count = 1; count <= 4; count++) {
       scope.addCard(newCard);
-      expect(scope.deckStatus.totalCards).to.equal(count);
-      expect(scope.deckStatus.card[1].quantity).to.equal(count);
+      expect(scope.deckStatus.totalCards).to.equal(Math.min(count, 3));
+      expect(scope.deckStatus.card[1].quantity).to.equal(Math.min(count, 3));
     }
   });
 
