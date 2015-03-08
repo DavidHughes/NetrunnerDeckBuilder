@@ -81,6 +81,8 @@ describe('DeckBuilderController', function() {
     expect(scope.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints * 2);
     scope.removeCard(newAgenda);
     expect(scope.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints);
+    scope.removeCard(newAgenda)
+    expect(scope.deckStatus.agendaPoints).to.equal(0);
 
     scope.removeCard(newCard);
     expect(scope.deckStatus.agendaPoints).to.equal(0);
