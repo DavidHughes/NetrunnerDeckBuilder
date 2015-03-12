@@ -1,7 +1,7 @@
 <div ng-controller="DeckManagerController">
   <ul>
     <li ng-repeat="deck in allDecks">
-      <a ng-href="/deck/edit/deck.id">
+      <a ng-href="/deck/edit/{{deck.id}}">
         <span ng-bind="deck.name"></span> [<span ng-bind="deck.id"></span>]
       </a>
       <button ng-hide="changeDeckName === deck.id" ng-click="changeDeckName = deck.id">Edit</button>
