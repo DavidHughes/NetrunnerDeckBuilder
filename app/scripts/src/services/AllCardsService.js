@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('deckBuilder').factory('AllCardsService', ['$http', 'CardsDatabase', '$filter', function($http, CardsDatabase, $filter) {
+  angular.module('dataDealer').factory('AllCardsService', ['$http', 'CardsDatabase', '$filter', function($http, CardsDatabase, $filter) {
     return {
       'getAllCards': function (callback) {
         return $http.get(CardsDatabase, {'cache': true}).success(callback);

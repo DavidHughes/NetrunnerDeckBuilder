@@ -1,16 +1,16 @@
 (function() {
   'use strict';
-  angular.module('deckBuilder', ['ngRoute']);
+  angular.module('dataDealer', ['ngRoute']);
 })();
 
 (function() {
   'use strict';
-  angular.module('deckBuilder').value('CardsDatabase', 'data/allCards.json');
+  angular.module('dataDealer').value('CardsDatabase', 'data/allCards.json');
 })();
 
 (function() {
   'use strict';
-  angular.module('deckBuilder').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+  angular.module('dataDealer').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $routeProvider
       .when('/', {
         controller: 'DeckManagerController',
@@ -33,7 +33,7 @@
 (function() {
   'use strict';
 
-  angular.module('deckBuilder').factory('AllCardsService', ['$http', 'CardsDatabase', '$filter', function($http, CardsDatabase, $filter) {
+  angular.module('dataDealer').factory('AllCardsService', ['$http', 'CardsDatabase', '$filter', function($http, CardsDatabase, $filter) {
     return {
       'getAllCards': function (callback) {
         return $http.get(CardsDatabase, {'cache': true}).success(callback);
@@ -75,7 +75,7 @@
 (function() {
   'use strict';
 
-  angular.module('deckBuilder').factory('UserDecksService', [function() {
+  angular.module('dataDealer').factory('UserDecksService', [function() {
     var allDecks = {};
 
     try {
@@ -116,7 +116,7 @@
 
 (function() {
   'use strict';
-  angular.module('deckBuilder').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
+  angular.module('dataDealer').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
     AllCardsService.getAllCards(function(data) {
@@ -233,7 +233,7 @@
 
 (function() {
   'use strict';
-  angular.module('deckBuilder').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
+  angular.module('dataDealer').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
     $scope.allDecks = UserDecksService.getDecks();
 
     $scope.changeDeckName = null;

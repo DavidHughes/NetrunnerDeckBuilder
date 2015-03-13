@@ -16,7 +16,7 @@ describe('UserDecksService', function() {
   var UserDecksService;
 
   beforeEach(function() {
-    module('deckBuilder');
+    module('dataDealer');
 
     inject(function(_UserDecksService_) {
       UserDecksService = _UserDecksService_;

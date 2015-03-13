@@ -24,7 +24,7 @@ describe('AllCardsService', function() {
     ]
   }, httpBackend, mockCardsDatabase, AllCardsService;
 
-  beforeEach(module('deckBuilder'));
+  beforeEach(module('dataDealer'));
   beforeEach(inject(function(_AllCardsService_, $httpBackend, _CardsDatabase_) {
     AllCardsService = _AllCardsService_;
     mockCardsDatabase = _CardsDatabase_;

@@ -1,4 +1,4 @@
 (function() {
   'use strict';
-  angular.module('deckBuilder', ['ngRoute']);
+  angular.module('dataDealer', ['ngRoute']);
 })();

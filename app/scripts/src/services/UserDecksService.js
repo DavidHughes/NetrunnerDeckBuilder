@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('deckBuilder').factory('UserDecksService', [function() {
+  angular.module('dataDealer').factory('UserDecksService', [function() {
     var allDecks = {};
 
     try {

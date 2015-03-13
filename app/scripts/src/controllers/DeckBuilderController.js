@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('deckBuilder').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
+  angular.module('dataDealer').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
     AllCardsService.getAllCards(function(data) {

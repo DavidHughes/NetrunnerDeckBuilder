@@ -1,4 +1,4 @@
 (function() {
   'use strict';
-  angular.module('deckBuilder').value('CardsDatabase', 'data/allCards.json');
+  angular.module('dataDealer').value('CardsDatabase', 'data/allCards.json');
 })();

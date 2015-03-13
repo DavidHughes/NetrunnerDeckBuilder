@@ -2,7 +2,7 @@ describe('DeckBuilderController', function() {
   var scope, newCard;
 
   beforeEach(function() {
-    module('deckBuilder');
+    module('dataDealer');
     inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
       $controller("DeckBuilderController", {

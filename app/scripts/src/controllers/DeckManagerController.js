@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('deckBuilder').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
+  angular.module('dataDealer').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
     $scope.allDecks = UserDecksService.getDecks();
 
     $scope.changeDeckName = null;

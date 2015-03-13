@@ -15,7 +15,7 @@ initialiseStorage();
 describe('DeckManagerController', function() {
   var scope;
   beforeEach(function() {
-    module('deckBuilder');
+    module('dataDealer');
     inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
       $controller('DeckManagerController', {

@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('deckBuilder').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+  angular.module('dataDealer').config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
     $routeProvider
       .when('/', {
         controller: 'DeckManagerController',
