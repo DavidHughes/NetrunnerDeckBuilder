@@ -1,4 +1,5 @@
 function initialiseStorage() {
+  'use strict';
   localStorage.setItem('allDecks', JSON.stringify({
     1: {
       card: {},

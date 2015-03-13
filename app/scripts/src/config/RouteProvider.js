@@ -7,8 +7,8 @@
         templateUrl: 'templates/deck-manager.html'
       }).
       when('/deck/edit/:deckId', {
-        controller: 'DeckBuilderController',
-        templateUrl: 'templates/deck-builder.html',
+        controller: 'DeckEditorController',
+        templateUrl: 'templates/deck-editor.html',
         resolve: {
           'AllCardsService': function(AllCardsService) {
             return AllCardsService;

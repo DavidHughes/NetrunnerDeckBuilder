@@ -1,4 +1,5 @@
 describe('AllCardsService', function() {
+  'use strict';
   var someCards = {
     "netrunnerCards": [
       {

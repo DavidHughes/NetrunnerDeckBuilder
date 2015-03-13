@@ -17,7 +17,7 @@
         templateUrl: 'templates/deck-manager.html'
       }).
       when('/deck/edit/:deckId', {
-        controller: 'DeckBuilderController',
+        controller: 'DeckEditorController',
         templateUrl: 'templates/deck-builder.html',
         resolve: {
           'AllCardsService': function(AllCardsService) {
@@ -116,7 +116,7 @@
 
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckBuilderController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
+  angular.module('dataDealer').controller('DeckEditorController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
     AllCardsService.getAllCards(function(data) {

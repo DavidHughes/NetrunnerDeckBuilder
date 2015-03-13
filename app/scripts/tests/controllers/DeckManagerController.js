@@ -1,4 +1,5 @@
 function initialiseStorage() {
+  'use strict';
   localStorage.setItem('allDecks', JSON.stringify({
     1: {
       card: {},
@@ -13,6 +14,7 @@ function initialiseStorage() {
 initialiseStorage();
 
 describe('DeckManagerController', function() {
+  'use strict';
   var scope;
   beforeEach(function() {
     module('dataDealer');

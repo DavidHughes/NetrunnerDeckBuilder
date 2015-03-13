@@ -1,11 +1,12 @@
-describe('DeckBuilderController', function() {
-  var scope, newCard;
+describe('DeckEditorController', function() {
+  'use strict';
+  var scope, newCard, newAgenda;
 
   beforeEach(function() {
     module('dataDealer');
     inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
-      $controller("DeckBuilderController", {
+      $controller("DeckEditorController", {
         $scope: scope,
         $routeParams: {
           deckId: 1
