@@ -18,7 +18,7 @@
       }).
       when('/deck/edit/:deckId', {
         controller: 'DeckEditorController',
-        templateUrl: 'templates/deck-builder.html',
+        templateUrl: 'templates/deck-editor.html',
         resolve: {
           'AllCardsService': function(AllCardsService) {
             return AllCardsService;

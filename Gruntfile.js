@@ -44,6 +44,10 @@ module.exports = function (grunt) {
         files: ['<%= config.app %>/scripts/src/{,*/}*.js', '<%= config.app %>/scripts/tests/{,*/}*.js'],
         tasks: ['karma:unit:run']
       },
+      testjshint: {
+        files: ['<%= config.app %>/scripts/tests/{,*/}*.js'],
+        tasks: ['jshint']
+      },
       gruntfile: {
         files: ['Gruntfile.js']
       },

@@ -1,3 +1,4 @@
+/*global describe, beforeEach, module, inject, it, expect*/
 describe('DeckEditorController', function() {
   'use strict';
   var scope, newCard, newAgenda;
@@ -6,7 +7,7 @@ describe('DeckEditorController', function() {
     module('dataDealer');
     inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
-      $controller("DeckEditorController", {
+      $controller('DeckEditorController', {
         $scope: scope,
         $routeParams: {
           deckId: 1
@@ -18,6 +19,7 @@ describe('DeckEditorController', function() {
           buildDeck: function(id) {
             switch (id) {
               case 1:
+              /*falls through*/
               default:
                 return {
                   card: {},
@@ -33,15 +35,15 @@ describe('DeckEditorController', function() {
       });
     });
     newCard = {
-      "type": "Upgrade",
-      "title": "Corporate Troubleshooter",
-      "side": "Corp",
-      "code": 1
+      'type': 'Upgrade',
+      'title': 'Corporate Troubleshooter',
+      'side': 'Corp',
+      'code': 1
     };
     newAgenda = {
-      "type": "Agenda",
-      "title": "AstroScript Pilot Program",
-      "agendapoints": 2
+      'type': 'Agenda',
+      'title': 'AstroScript Pilot Program',
+      'agendapoints': 2
     };
   });
 
@@ -82,7 +84,7 @@ describe('DeckEditorController', function() {
     expect(scope.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints * 2);
     scope.removeCard(newAgenda);
     expect(scope.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints);
-    scope.removeCard(newAgenda)
+    scope.removeCard(newAgenda);
     expect(scope.deckStatus.agendaPoints).to.equal(0);
 
     scope.removeCard(newCard);

@@ -1,3 +1,4 @@
+/*global describe, beforeEach, module, inject, it, expect*/
 function initialiseStorage() {
   'use strict';
   localStorage.setItem('allDecks', JSON.stringify({

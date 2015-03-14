@@ -1,26 +1,27 @@
+/*global describe, beforeEach, module, inject, it, expect*/
 describe('AllCardsService', function() {
   'use strict';
   var someCards = {
-    "netrunnerCards": [
+    'netrunnerCards': [
       {
-        "type": "Identity",
-        "title": "Noise: Hacker Extraordinaire",
-        "side": "Runner"
+        'type': 'Identity',
+        'title': 'Noise: Hacker Extraordinaire',
+        'side': 'Runner'
       },
       {
-        "type": "Identity",
-        "title": "Jinteki: Personal Evolution",
-        "side": "Corp"
+        'type': 'Identity',
+        'title': 'Jinteki: Personal Evolution',
+        'side': 'Corp'
       },
       {
-        "type": "Resource",
-        "title": "Aesop's Pawnshop",
-        "side": "Runner"
+        'type': 'Resource',
+        'title': 'Aesop\'s Pawnshop',
+        'side': 'Runner'
       },
       {
-        "type": "Upgrade",
-        "title": "Corporate Troubleshooter",
-        "side": "Corp"
+        'type': 'Upgrade',
+        'title': 'Corporate Troubleshooter',
+        'side': 'Corp'
       }
     ]
   }, httpBackend, mockCardsDatabase, AllCardsService;

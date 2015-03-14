@@ -1,3 +1,4 @@
+/*global describe, beforeEach, module, inject, it, expect, afterEach*/
 function initialiseStorage() {
   'use strict';
   localStorage.setItem('allDecks', JSON.stringify({
@@ -14,6 +15,7 @@ function initialiseStorage() {
 initialiseStorage();
 
 describe('UserDecksService', function() {
+  'use strict';
   var UserDecksService;
 
   beforeEach(function() {
