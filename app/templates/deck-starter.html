@@ -1,0 +1,19 @@
+<div ng-controller="DeckEditorController">
+  <div ng-hide="deckStatus.identity.name">
+    <div ng-show="!deckStatus.identity.side">
+      <p>Are you a CORP or RUNNER?</p>
+      <button ng-click="deckStatus.identity.side='corp'">CORP</button>
+      <button ng-click="deckStatus.identity.side='runner'">RUNNER</button>
+    </div>
+    <div ng-show="deckStatus.identity.side && !deckStatus.identity.title">
+      <p>Who are you building a deck as today?</p>
+      <select ng-model="identity" ng-options="card as card.title for card in allCards | filter: { type: 'Identity', side: deckStatus.identity.side } | orderBy: 'faction'" />
+      <button ng-click="deckStatus.identity = identity">Hit me up!</button>
+      <hr />
+      <button ng-click="deckStatus.identity.side = ''">&lt; Back</button>
+    </div>
+  </div>
+  <div ng-show="deckStatus.identity.title">
+    <p>Good morning, {{ deckStatus.identity.title }}</p>
+  </div>
+</div>
