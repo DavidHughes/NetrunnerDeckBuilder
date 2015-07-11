@@ -1,10 +1,16 @@
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckEditorController', ['$scope', '$routeParams', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, AllCardsService, UserDecksService) {
+  angular.module('dataDealer').controller('DeckEditorController', ['$scope', '$routeParams', '$filter', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, $filter, AllCardsService, UserDecksService) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
     AllCardsService.getAllCards(function(data) {
+      var searchResults;
       $scope.allCards = data.netrunnerCards;
+
+      if ($routeParams.identityId) {
+        searchResults = $filter('filter')($scope.allCards, { code: $routeParams.identityId }, true);
+        $scope.deckStatus.identity = searchResults.length ? searchResults[0] : null;
+      }
     });
 
     $scope.orderProp = 'faction';
@@ -88,7 +94,7 @@
       }
 
       $scope.deckStatus.totalCards = quantity;
-      $scope.updateRequiredAgendaPoints();
+      $scope.deckStatus.requiredAgendaPoints = $scope.getRequiredAgendaPoints($scope.deckStatus);
 
       $scope.isDeckSaved = false;
     };
@@ -101,7 +107,7 @@
       }
     };
 
-    $scope.updateRequiredAgendaPoints = function() {
+    $scope.getRequiredAgendaPoints = function() {
       var minimumAgendaPoints = 18;
 
       // TODO: Need to pull in the minimum cards from used identity i.e. for NBN:TWIY
@@ -111,6 +117,25 @@
       }
 
       $scope.deckStatus.requiredAgendaPoints = [minimumAgendaPoints, minimumAgendaPoints + 1];
+    };
+
+    $scope.fetchRelevantIdentities = function(side, callback) {
+      switch (side) {
+        case 'runner':
+        AllCardsService.getRunnerIdentities(function(data) {
+          callback(data);
+        });
+        break;
+        case 'corp':
+        AllCardsService.getCorpIdentities(function(data) {
+          callback(data);
+        });
+        break;
+        default:
+        AllCardsService.getIdentities(function(data) {
+          callback(data);
+        });
+      }
     };
   }]);
 })();

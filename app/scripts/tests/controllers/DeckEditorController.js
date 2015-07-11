@@ -11,26 +11,6 @@ describe('DeckEditorController', function() {
         $scope: scope,
         $routeParams: {
           deckId: 1
-        },
-        AllCardsService: {
-          getAllCards: function() {}
-        },
-        UserDecksService: {
-          buildDeck: function(id) {
-            switch (id) {
-              case 1:
-              /*falls through*/
-              default:
-                return {
-                  card: {},
-                  totalCards: 0,
-                  agendaPoints: 0,
-                  requiredAgendaPoints: [18, 19],
-                  name: '',
-                  id: null
-                };
-            }
-          }
         }
       });
     });
@@ -90,4 +70,18 @@ describe('DeckEditorController', function() {
     scope.removeCard(newCard);
     expect(scope.deckStatus.agendaPoints).to.equal(0);
   });
+
+  // it('can retrieve the identities associated with the current deck\'s side', function(done) {
+  //   scope.deckStatus.identity = {
+  //     'name': 'Gabriel Santiago',
+  //     'faction': 'criminal',
+  //     'side': 'runner'
+  //   };
+
+  //   scope.fetchRelevantIdentities(function(data) {
+  //     var fetchedRunnerIdentities = data;
+  //     expect(fetchedRunnerIdentities.length).to.equal(0);
+  //     done();
+  //   });
+  // });
 });

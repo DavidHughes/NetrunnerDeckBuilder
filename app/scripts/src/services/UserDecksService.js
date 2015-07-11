@@ -32,6 +32,7 @@
             agendaPoints: 0,
             requiredAgendaPoints: [18, 19],
             name: '',
+            identity: {},
             id: null
           };
         }

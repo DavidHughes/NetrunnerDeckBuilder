@@ -47,35 +47,5 @@ describe('AllCardsService', function() {
       });
       httpBackend.flush();
     });
-
-    it('can retrieve all identities', function(done) {
-      AllCardsService.getIdentities(function(data) {
-        expect(data.netrunnerCards.length).to.equal(2);
-        for (var i = 0; i < 2; i++) {
-          expect(data.netrunnerCards[i].title).to.equal(someCards.netrunnerCards[i].title);
-          expect(data.netrunnerCards[i].type).to.equal('Identity');
-        }
-        done();
-      });
-      httpBackend.flush();
-    });
-
-    it('can retrieve all runner identities', function(done) {
-      AllCardsService.getRunnerIdentities(function(data) {
-        expect(data.netrunnerCards.length).to.equal(1);
-        expect(data.netrunnerCards[0].title).to.equal('Noise: Hacker Extraordinaire');
-        done();
-      });
-      httpBackend.flush();
-    });
-
-    it('can retrieve all corp identities', function(done) {
-      AllCardsService.getCorpIdentities(function(data) {
-        expect(data.netrunnerCards.length).to.equal(1);
-        expect(data.netrunnerCards[0].title).to.equal('Jinteki: Personal Evolution');
-        done();
-      });
-      httpBackend.flush();
-    });
   });
 });

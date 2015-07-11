@@ -14,6 +14,22 @@
             return AllCardsService;
           }
         }
+      }).
+      when('/deck/edit/from/:identityId', {
+        controller: 'DeckEditorController',
+        templateUrl: 'templates/deck-editor.html',
+        resolve: {
+          AllCardsService: function(AllCardsService) {
+            return AllCardsService;
+          }
+        }
+      }).
+      when('/deck/new/', {
+        controller: 'DeckEditorController',
+        templateUrl: 'templates/deck-starter.html'
+      }).
+      otherwise({
+        redirectTo: '/'
       });
 
     $locationProvider.html5Mode(true);
