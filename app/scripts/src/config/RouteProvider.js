@@ -10,7 +10,7 @@
         controller: 'DeckEditorController',
         templateUrl: 'templates/deck-editor.html',
         resolve: {
-          'AllCardsService': function(AllCardsService) {
+          AllCardsService: function(AllCardsService) {
             return AllCardsService;
           }
         }
