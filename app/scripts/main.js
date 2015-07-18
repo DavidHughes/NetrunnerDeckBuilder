@@ -168,23 +168,24 @@
     $scope.removeCard = function(card) {
       var newQuantity = 0;
 
-      if ($scope.deckStatus.card[card.code]) {
-        newQuantity = Math.max($scope.deckStatus.card[card.code].quantity - 1, 0);
+      if (!$scope.deckStatus.card[card.code]) {
+        return;
       }
 
-      if ($scope.deckStatus.card[card.code]) {
-        if (newQuantity) {
-          $scope.deckStatus.card[card.code] = {
-            details: card,
-            quantity: newQuantity
-          };
-        } else {
-          delete $scope.deckStatus.card[card.code];
-        }
-        $scope.updateCardCount();
-        if (card.agendapoints) {
-          $scope.updateAgendaPoints(card.agendapoints, true);
-        }
+      newQuantity = Math.max($scope.deckStatus.card[card.code].quantity - 1, 0);
+
+      if (newQuantity) {
+        $scope.deckStatus.card[card.code] = {
+          details: card,
+          quantity: newQuantity
+        };
+      } else {
+        delete $scope.deckStatus.card[card.code];
+      }
+
+      $scope.updateCardCount();
+      if (card.agendapoints) {
+        $scope.updateAgendaPoints(card.agendapoints, true);
       }
     };
 
