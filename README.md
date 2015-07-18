@@ -1,10 +1,3 @@
-TODO:
-  Views for:
-    Collection Building
-      - Data Packs/Expansions
-      - Core Sets
-    Deck Selection
-      - List existing decks
-      - Create new:
-        - Based off old one (view deck diff?)
-        - From scratch
+#Netrunner Deck Builder
+
+This is a deck builder for the game Android: Netrunner. The primary purpose of this repository for now is as a way for me to learn Angular.js.
