@@ -2,10 +2,16 @@
   'use strict';
 
   angular.module('dataDealer').factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
-    return {
-      getAllCards: function (callback) {
-        return $http.get(CardsDatabase, {'cache': true}).success(callback);
-      }
+    var AllCardsService = {};
+
+    AllCardsService.allCards = {};
+
+    AllCardsService.getAllCards = function () {
+      return $http.get(CardsDatabase, {cache: true}).success(function(response) {
+        AllCardsService.allCards = response.netrunnerCards;
+      });
     };
+
+    return AllCardsService;
   }]);
 })();

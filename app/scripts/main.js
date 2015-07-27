@@ -21,7 +21,7 @@
         templateUrl: 'templates/deck-editor.html',
         resolve: {
           AllCardsService: function(AllCardsService) {
-            return AllCardsService;
+            return AllCardsService.getAllCards();
           }
         }
       }).
@@ -30,7 +30,7 @@
         templateUrl: 'templates/deck-editor.html',
         resolve: {
           AllCardsService: function(AllCardsService) {
-            return AllCardsService;
+            return AllCardsService.getAllCards();
           }
         }
       }).
@@ -50,11 +50,17 @@
   'use strict';
 
   angular.module('dataDealer').factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
-    return {
-      getAllCards: function (callback) {
-        return $http.get(CardsDatabase, {'cache': true}).success(callback);
-      }
+    var AllCardsService = {};
+
+    AllCardsService.allCards = {};
+
+    AllCardsService.getAllCards = function () {
+      return $http.get(CardsDatabase, {cache: true}).success(function(response) {
+        AllCardsService.allCards = response.netrunnerCards;
+      });
     };
+
+    return AllCardsService;
   }]);
 })();
 
@@ -350,16 +356,7 @@
       }
     };
 
-    // Load in all the cards.
-    AllCardsService.getAllCards(function(data) {
-      var searchResults;
-      self.allCards = data.netrunnerCards;
-
-      if ($routeParams.identityId) {
-        searchResults = $filter('filter')(self.allCards, { code: $routeParams.identityId }, true);
-        self.deckStatus.identity = searchResults.length ? searchResults[0] : null;
-      }
-    });
+    self.allCards = AllCardsService.allCards;
   }]);
 })();
 

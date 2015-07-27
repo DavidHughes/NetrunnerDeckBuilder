@@ -68,15 +68,6 @@
       }
     };
 
-    // Load in all the cards.
-    AllCardsService.getAllCards(function(data) {
-      var searchResults;
-      self.allCards = data.netrunnerCards;
-
-      if ($routeParams.identityId) {
-        searchResults = $filter('filter')(self.allCards, { code: $routeParams.identityId }, true);
-        self.deckStatus.identity = searchResults.length ? searchResults[0] : null;
-      }
-    });
+    self.allCards = AllCardsService.allCards;
   }]);
 })();

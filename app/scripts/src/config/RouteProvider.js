@@ -11,7 +11,7 @@
         templateUrl: 'templates/deck-editor.html',
         resolve: {
           AllCardsService: function(AllCardsService) {
-            return AllCardsService;
+            return AllCardsService.getAllCards();
           }
         }
       }).
@@ -20,7 +20,7 @@
         templateUrl: 'templates/deck-editor.html',
         resolve: {
           AllCardsService: function(AllCardsService) {
-            return AllCardsService;
+            return AllCardsService.getAllCards();
           }
         }
       }).
