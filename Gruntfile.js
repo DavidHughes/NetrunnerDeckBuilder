@@ -9,6 +9,8 @@
 
 module.exports = function (grunt) {
 
+  var modRewrite = require('connect-modrewrite');
+
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
 
@@ -90,12 +92,20 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-          middleware: function(connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
-            ];
+          open: true,
+          base: [
+            '.tmp'
+          ],
+          middleware: function(connect, options) {
+            var middlewares = [];
+
+            middlewares.push(modRewrite(['^[^\\.]*$ /index.html [L]'])); //Matches everything that does not contain a '.' (period)
+            options.base.forEach(function(base) {
+              middlewares.push(connect.static(base));
+            });
+            middlewares.push(connect().use('/bower_components', connect.static('./bower_components')));
+            middlewares.push(connect.static(config.app));
+            return middlewares;
           }
         }
       },
