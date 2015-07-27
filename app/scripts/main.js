@@ -339,28 +339,6 @@
       self.deckStatus.requiredAgendaPoints = requiredAgendaPoints;
     };
 
-    /**
-     * @deprecated
-     */
-    self.fetchRelevantIdentities = function(side, callback) {
-      switch (side) {
-        case 'runner':
-        AllCardsService.getRunnerIdentities(function(data) {
-          callback(data);
-        });
-        break;
-        case 'corp':
-        AllCardsService.getCorpIdentities(function(data) {
-          callback(data);
-        });
-        break;
-        default:
-        AllCardsService.getIdentities(function(data) {
-          callback(data);
-        });
-      }
-    };
-
     self.allCards = AllCardsService.allCards;
   }]);
 })();

@@ -68,18 +68,4 @@ describe('DeckEditorController', function() {
     controller.removeCard(newCard);
     expect(controller.deckStatus.agendaPoints).to.equal(0);
   });
-
-  // it('can retrieve the identities associated with the current deck\'s side', function(done) {
-  //   controller.deckStatus.identity = {
-  //     'name': 'Gabriel Santiago',
-  //     'faction': 'criminal',
-  //     'side': 'runner'
-  //   };
-
-  //   controller.fetchRelevantIdentities(function(data) {
-  //     var fetchedRunnerIdentities = data;
-  //     expect(fetchedRunnerIdentities.length).to.equal(0);
-  //     done();
-  //   });
-  // });
 });
