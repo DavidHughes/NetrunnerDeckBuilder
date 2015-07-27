@@ -1,125 +1,49 @@
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckEditorController', ['$scope', '$routeParams', '$filter', 'AllCardsService', 'UserDecksService', function($scope, $routeParams, $filter, AllCardsService, UserDecksService) {
+  angular.module('dataDealer').controller('DeckEditorController', ['$scope', '$routeParams', '$filter', 'AllCardsService', 'UserDecksService', 'Deck', function($scope, $routeParams, $filter, AllCardsService, UserDecksService, Deck) {
     $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
-
-    AllCardsService.getAllCards(function(data) {
-      var searchResults;
-      $scope.allCards = data.netrunnerCards;
-
-      if ($routeParams.identityId) {
-        searchResults = $filter('filter')($scope.allCards, { code: $routeParams.identityId }, true);
-        $scope.deckStatus.identity = searchResults.length ? searchResults[0] : null;
-      }
-    });
 
     $scope.orderProp = 'faction';
 
-    /**
-     * Saves the active deck to the UserDecksService.
-     * Deck is given a unique ID based off timestamp.
-     */
     $scope.saveDeck = function() {
-      // TODO: validate before saving
-      if ($scope.deckStatus.id === null) {
-        $scope.deckStatus.id = (new Date()).getTime().toString();
-      }
-      UserDecksService.saveDeck($scope.deckStatus);
-      $scope.isDeckSaved = true;
-    };
-
-    $scope.revertDeck = function() {
-      $scope.deckStatus = UserDecksService.buildDeck($scope.deckStatus.id);
-      $scope.isDeckSaved = true;
+      Deck.saveDeck($scope.deckStatus);
+      $scope.isDeckSaved = false;
     };
 
     $scope.isDeckSaved = true;
 
-    /**
-     * Adds a card to the deckStatus object.
-     *
-     * If deckStatus already has an entry for the card, the quantity is increased.
-     * If the quantity is at 3 already, there is no change.
-     * @param card to be added
-     * @return void
-     */
     $scope.addCard = function(card) {
-      var newQuantity = 1;
-
-      if ($scope.deckStatus.card[card.code]) {
-        newQuantity = $scope.deckStatus.card[card.code].quantity + 1;
-      }
-
-      if (newQuantity <= 3) {
-        $scope.deckStatus.card[card.code] = {
-          details: card,
-          quantity: newQuantity
-        };
-        $scope.updateCardCount();
-        if (card.agendapoints) {
-          $scope.updateAgendaPoints(card.agendapoints);
-        }
-      }
+      $scope.deckStatus = Deck.addCard($scope.deckStatus, card);
+      $scope.isDeckSaved = false;
     };
 
     $scope.removeCard = function(card) {
-      var newQuantity = 0;
-
-      if (!$scope.deckStatus.card[card.code]) {
-        return;
-      }
-
-      newQuantity = Math.max($scope.deckStatus.card[card.code].quantity - 1, 0);
-
-      if (newQuantity) {
-        $scope.deckStatus.card[card.code] = {
-          details: card,
-          quantity: newQuantity
-        };
-      } else {
-        delete $scope.deckStatus.card[card.code];
-      }
-
-      $scope.updateCardCount();
-      if (card.agendapoints) {
-        $scope.updateAgendaPoints(card.agendapoints, true);
-      }
+      Deck.removeCard($scope.deckStatus, card);
+      $scope.isDeckSaved = false;
     };
 
     $scope.updateCardCount = function() {
-      var usedCards = Object.keys($scope.deckStatus.card),
-        quantity = 0;
+      var totalCards = Deck.fetchCardCount($scope.deckStatus);
 
-      for (var code in usedCards) {
-        quantity += $scope.deckStatus.card[usedCards[code]].quantity;
-      }
-
-      $scope.deckStatus.totalCards = quantity;
+      $scope.deckStatus.totalCards = totalCards;
       $scope.deckStatus.requiredAgendaPoints = $scope.getRequiredAgendaPoints($scope.deckStatus);
 
       $scope.isDeckSaved = false;
     };
 
     $scope.updateAgendaPoints = function(agendaPoints, isDecreased) {
-      if (isDecreased) {
-        $scope.deckStatus.agendaPoints -= agendaPoints;
-      } else {
-        $scope.deckStatus.agendaPoints += agendaPoints;
-      }
+      $scope.deckStatus.agendaPoints = Deck.updateAgendaPoints($scope.deckStatus, agendaPoints, isDecreased);
     };
 
     $scope.getRequiredAgendaPoints = function() {
-      var minimumAgendaPoints = 18;
+      var requiredAgendaPoints = Deck.fetchRequiredAgendaPoints($scope.deckStatus);
 
-      // TODO: Need to pull in the minimum cards from used identity i.e. for NBN:TWIY
-      if ($scope.deckStatus.totalCards > 39) {
-        // Caution: MATH - https://www.youtube.com/watch?v=gENVB6tjq_M
-        minimumAgendaPoints += (Math.floor(($scope.deckStatus.totalCards - 40) / 5) * 2);
-      }
-
-      $scope.deckStatus.requiredAgendaPoints = [minimumAgendaPoints, minimumAgendaPoints + 1];
+      $scope.deckStatus.requiredAgendaPoints = requiredAgendaPoints;
     };
 
+    /**
+     * @deprecated
+     */
     $scope.fetchRelevantIdentities = function(side, callback) {
       switch (side) {
         case 'runner':
@@ -138,5 +62,16 @@
         });
       }
     };
+
+    // Load in all the cards.
+    AllCardsService.getAllCards(function(data) {
+      var searchResults;
+      $scope.allCards = data.netrunnerCards;
+
+      if ($routeParams.identityId) {
+        searchResults = $filter('filter')($scope.allCards, { code: $routeParams.identityId }, true);
+        $scope.deckStatus.identity = searchResults.length ? searchResults[0] : null;
+      }
+    });
   }]);
 })();
