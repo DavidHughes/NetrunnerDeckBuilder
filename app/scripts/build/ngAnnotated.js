@@ -1,10 +1,5 @@
 (function() {
   'use strict';
-  angular.module('dataDealer', ['ngRoute']);
-})();
-
-(function() {
-  'use strict';
   angular.module('dataDealer').value('CardsDatabase', 'data/allCards.json');
 })();
 
@@ -53,63 +48,70 @@
 
 (function() {
   'use strict';
+  angular.module('dataDealer').controller('DeckEditorController', ['$routeParams', 'AllCardsService', 'UserDecksService', 'Deck', function($routeParams, AllCardsService, UserDecksService, Deck) {
+    var self = this;
 
-  angular.module('dataDealer').factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
-    var AllCardsService = {};
+    self.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
-    AllCardsService.allCards = {};
+    self.isDeckSaved = true;
 
-    AllCardsService.getAllCards = function () {
-      return $http.get(CardsDatabase, {cache: true}).success(function(response) {
-        AllCardsService.allCards = response.netrunnerCards;
-      });
+    self.orderProp = 'faction';
+
+    self.saveDeck = function() {
+      Deck.saveDeck(self.deckStatus);
+      self.isDeckSaved = true;
     };
 
-    return AllCardsService;
+    self.revertDeck = function() {
+      self.deckStatus = Deck.revertDeck(self.deckStatus);
+      self.isDeckSaved = true;
+    };
+
+    self.addCard = function(card) {
+      self.deckStatus = Deck.addCard(self.deckStatus, card);
+      self.isDeckSaved = false;
+    };
+
+    self.removeCard = function(card) {
+      Deck.removeCard(self.deckStatus, card);
+      self.isDeckSaved = false;
+    };
+
+    self.updateCardCount = function() {
+      var totalCards = Deck.fetchCardCount(self.deckStatus);
+
+      self.deckStatus.totalCards = totalCards;
+      self.deckStatus.requiredAgendaPoints = self.getRequiredAgendaPoints(self.deckStatus);
+    };
+
+    self.updateAgendaPoints = function(agendaPoints, isDecreased) {
+      self.deckStatus.agendaPoints = Deck.updateAgendaPoints(self.deckStatus, agendaPoints, isDecreased);
+    };
+
+    self.getRequiredAgendaPoints = function() {
+      var requiredAgendaPoints = Deck.fetchRequiredAgendaPoints(self.deckStatus);
+
+      self.deckStatus.requiredAgendaPoints = requiredAgendaPoints;
+    };
+
+    self.allCards = AllCardsService.allCards;
   }]);
 })();
 
 (function() {
   'use strict';
+  angular.module('dataDealer').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
+    $scope.allDecks = UserDecksService.getDecks();
 
-  angular.module('dataDealer').factory('UserDecksService', function() {
-    var allDecks = {};
+    $scope.changeDeckName = null;
 
-    try {
-      allDecks = JSON.parse(localStorage.getItem('allDecks'));
-    } catch (e) {
-      console.log('localStorage is corrupted. Probably needs to be cleared');
-    }
-
-    if (!allDecks) {
-      allDecks = {};
-    }
-
-    return {
-      saveDeck: function(deck) {
-        allDecks[deck.id] = deck;
-        localStorage.setItem('allDecks', JSON.stringify(allDecks));
-      },
-      getDecks: function() {
-        return allDecks;
-      },
-      buildDeck: function(id) {
-        if (allDecks[id]) {
-          return angular.copy(allDecks[id]);
-        } else {
-          return {
-            card: {},
-            totalCards: 0,
-            agendaPoints: 0,
-            requiredAgendaPoints: [18, 19],
-            name: '',
-            identity: {},
-            id: null
-          };
-        }
+    $scope.setDeckName = function(deckId, newName) {
+      if ($scope.allDecks[deckId]) {
+        $scope.allDecks[deckId].name = newName;
+        UserDecksService.saveDeck($scope.allDecks[deckId]);
       }
     };
-  });
+  }]);
 })();
 
 (function() {
@@ -293,68 +295,66 @@
 
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckEditorController', ['$routeParams', 'AllCardsService', 'UserDecksService', 'Deck', function($routeParams, AllCardsService, UserDecksService, Deck) {
-    var self = this;
+  angular.module('dataDealer', ['ngRoute']);
+})();
 
-    self.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
+(function() {
+  'use strict';
 
-    self.isDeckSaved = true;
+  angular.module('dataDealer').factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
+    var AllCardsService = {};
 
-    self.orderProp = 'faction';
+    AllCardsService.allCards = {};
 
-    self.saveDeck = function() {
-      Deck.saveDeck(self.deckStatus);
-      self.isDeckSaved = true;
+    AllCardsService.getAllCards = function () {
+      return $http.get(CardsDatabase, {cache: true}).success(function(response) {
+        AllCardsService.allCards = response.netrunnerCards;
+      });
     };
 
-    self.revertDeck = function() {
-      self.deckStatus = Deck.revertDeck(self.deckStatus);
-      self.isDeckSaved = true;
-    };
-
-    self.addCard = function(card) {
-      self.deckStatus = Deck.addCard(self.deckStatus, card);
-      self.isDeckSaved = false;
-    };
-
-    self.removeCard = function(card) {
-      Deck.removeCard(self.deckStatus, card);
-      self.isDeckSaved = false;
-    };
-
-    self.updateCardCount = function() {
-      var totalCards = Deck.fetchCardCount(self.deckStatus);
-
-      self.deckStatus.totalCards = totalCards;
-      self.deckStatus.requiredAgendaPoints = self.getRequiredAgendaPoints(self.deckStatus);
-    };
-
-    self.updateAgendaPoints = function(agendaPoints, isDecreased) {
-      self.deckStatus.agendaPoints = Deck.updateAgendaPoints(self.deckStatus, agendaPoints, isDecreased);
-    };
-
-    self.getRequiredAgendaPoints = function() {
-      var requiredAgendaPoints = Deck.fetchRequiredAgendaPoints(self.deckStatus);
-
-      self.deckStatus.requiredAgendaPoints = requiredAgendaPoints;
-    };
-
-    self.allCards = AllCardsService.allCards;
+    return AllCardsService;
   }]);
 })();
 
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
-    $scope.allDecks = UserDecksService.getDecks();
 
-    $scope.changeDeckName = null;
+  angular.module('dataDealer').factory('UserDecksService', function() {
+    var allDecks = {};
 
-    $scope.setDeckName = function(deckId, newName) {
-      if ($scope.allDecks[deckId]) {
-        $scope.allDecks[deckId].name = newName;
-        UserDecksService.saveDeck($scope.allDecks[deckId]);
+    try {
+      allDecks = JSON.parse(localStorage.getItem('allDecks'));
+    } catch (e) {
+      console.log('localStorage is corrupted. Probably needs to be cleared');
+    }
+
+    if (!allDecks) {
+      allDecks = {};
+    }
+
+    return {
+      saveDeck: function(deck) {
+        allDecks[deck.id] = deck;
+        localStorage.setItem('allDecks', JSON.stringify(allDecks));
+      },
+      getDecks: function() {
+        return allDecks;
+      },
+      buildDeck: function(id) {
+        if (allDecks[id]) {
+          return angular.copy(allDecks[id]);
+        } else {
+          return {
+            card: {},
+            totalCards: 0,
+            agendaPoints: 0,
+            requiredAgendaPoints: [18, 19],
+            name: '',
+            identity: {},
+            id: null
+          };
+        }
       }
     };
-  }]);
+  });
 })();

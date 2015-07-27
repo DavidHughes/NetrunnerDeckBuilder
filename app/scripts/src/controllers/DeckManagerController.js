@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
+  angular.module('dataDealer').controller('DeckManagerController', function($scope, UserDecksService) {
     $scope.allDecks = UserDecksService.getDecks();
 
     $scope.changeDeckName = null;
@@ -11,5 +11,5 @@
         UserDecksService.saveDeck($scope.allDecks[deckId]);
       }
     };
-  }]);
+  });
 })();

@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckEditorController', function($routeParams, AllCardsService, UserDecksService, Deck) {
+  angular.module('dataDealer').controller('DeckEditorController', ['$routeParams', 'AllCardsService', 'UserDecksService', 'Deck', function($routeParams, AllCardsService, UserDecksService, Deck) {
     var self = this;
 
     self.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
@@ -47,5 +47,21 @@
     };
 
     self.allCards = AllCardsService.allCards;
-  });
+  }]);
+})();
+
+(function() {
+  'use strict';
+  angular.module('dataDealer').controller('DeckManagerController', ['$scope', 'UserDecksService', function($scope, UserDecksService) {
+    $scope.allDecks = UserDecksService.getDecks();
+
+    $scope.changeDeckName = null;
+
+    $scope.setDeckName = function(deckId, newName) {
+      if ($scope.allDecks[deckId]) {
+        $scope.allDecks[deckId].name = newName;
+        UserDecksService.saveDeck($scope.allDecks[deckId]);
+      }
+    };
+  }]);
 })();

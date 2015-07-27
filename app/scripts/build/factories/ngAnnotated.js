@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('dataDealer').factory('Deck', function (UserDecksService) {
+  angular.module('dataDealer').factory('Deck', ['UserDecksService', function (UserDecksService) {
     /**
      * Saves the active deck to the UserDecksService.
      * Deck is given a unique ID based off timestamp.
@@ -174,5 +174,5 @@
       fetchAgendaPoints: fetchAgendaPoints,
       fetchRequiredAgendaPoints: fetchRequiredAgendaPoints
     };
-  });
+  }]);
 })();

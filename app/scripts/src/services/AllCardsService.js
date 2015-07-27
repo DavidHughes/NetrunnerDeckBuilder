@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('dataDealer').factory('AllCardsService', ['$http', 'CardsDatabase', function($http, CardsDatabase) {
+  angular.module('dataDealer').factory('AllCardsService', function($http, CardsDatabase) {
     var AllCardsService = {};
 
     AllCardsService.allCards = {};
@@ -13,5 +13,5 @@
     };
 
     return AllCardsService;
-  }]);
+  });
 })();

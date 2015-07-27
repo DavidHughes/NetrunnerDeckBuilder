@@ -37,7 +37,7 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= config.app %>/scripts/src/{,*/}*.js'],
-        tasks: ['jshint', 'concat'],
+        tasks: ['jshint', 'ngAnnotate', 'concat'],
         options: {
           livereload: true
         }
@@ -142,10 +142,32 @@ module.exports = function (grunt) {
         'Gruntfile.js',
         '<%= config.app %>/scripts/src/{,*/}*.js',
         '<%= config.app %>/scripts/tests/{,*/}*.js',
-        '!<%= config.app %>/scripts/vendor/*',
+        '!<%= config.app %>/scripts/vendor/*'
       ]
     },
 
+    // Inject any Angular.js dependencies
+    ngAnnotate: {
+      options: {
+        singleQuotes: true
+      },
+      dataDealer: {
+        files: {
+          '<%= config.app %>/scripts/build/config/ngAnnotated.js': [
+            '<%= config.app %>/scripts/src/config/*.js'
+          ],
+          '<%= config.app %>/scripts/build/controllers/ngAnnotated.js': [
+            '<%= config.app %>/scripts/src/controllers/*.js'
+          ],
+          '<%= config.app %>/scripts/build/factories/ngAnnotated.js': [
+            '<%= config.app %>/scripts/src/factories/*.js'
+          ],
+          '<%= config.app %>/scripts/build/services/ngAnnotated.js': [
+            '<%= config.app %>/scripts/src/services/*.js'
+          ]
+        }
+      },
+    },
     // Mocha testing framework configuration options
     mocha: {
       all: {
@@ -287,39 +309,14 @@ module.exports = function (grunt) {
       }
     },
 
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //     dist: {
-    //         files: {
-    //             '<%= config.dist %>/styles/main.css': [
-    //                 '.tmp/styles/{,*/}*.css',
-    //                 '<%= config.app %>/styles/{,*/}*.css'
-    //             ]
-    //         }
-    //     }
-    // },
-    // uglify: {
-    //     dist: {
-    //         files: {
-    //             '<%= config.dist %>/scripts/scripts.js': [
-    //                 '<%= config.dist %>/scripts/scripts.js'
-    //             ]
-    //         }
-    //     }
-    // },
-    // concat: {
-    //     dist: {}
-    // },
     concat: {
       dist: {
         src: [
           'app/scripts/src/init.js',
-          'app/scripts/src/config/*.js',
-          'app/scripts/src/services/*.js',
-          'app/scripts/src/factories/*.js',
-          'app/scripts/src/controllers/*.js'
+          'app/scripts/build/config/*.js',
+          'app/scripts/build/services/*.js',
+          'app/scripts/build/factories/*.js',
+          'app/scripts/build/controllers/*.js'
         ],
         dest: 'app/scripts/main.js'
       }
@@ -383,6 +380,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'ngAnnotate',
       'concat',
       'concurrent:server',
       'karma:unit:start',
@@ -402,6 +400,7 @@ module.exports = function (grunt) {
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
+    'ngAnnotate',
     'concat',
     'cssmin',
     'uglify',
