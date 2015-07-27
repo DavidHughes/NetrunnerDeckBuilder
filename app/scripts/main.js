@@ -36,7 +36,12 @@
       }).
       when('/deck/new/', {
         controller: 'DeckEditorController',
-        templateUrl: 'templates/deck-starter.html'
+        templateUrl: 'templates/deck-starter.html',
+        resolve: {
+          AllCardsService: function(AllCardsService) {
+            return AllCardsService.getAllCards();
+          }
+        }
       }).
       otherwise({
         redirectTo: '/'
