@@ -24,7 +24,8 @@
         <th>Quantity</th>
         <th>
           <span ng-click="reverse = DeckEditor.orderProp === 'title' ? !reverse : false; orderProp = 'title';">Title</span>
-          <input type="text" ng-model="searchCriteria.title"></input>
+          <input type="text" ng-model="searchCriteria.title" />
+          <input type="hidden" ng-model="exclude.type" ng-value="Identity" />
         </th>
         <th ng-click="reverse = DeckEditor.orderProp === 'type' ? !reverse : false; DeckEditor.orderProp = 'type'">Type</th>
         <th ng-click="reverse = DeckEditor.orderProp === 'subtype' ? !reverse : false; DeckEditor.orderProp = 'subtype'">Subtype</th>
@@ -34,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="card in DeckEditor.allCards | filter: searchCriteria | orderBy : DeckEditor.orderProp : reverse">
+      <tr ng-repeat="card in DeckEditor.allCards | filter: searchCriteria : !exclude | orderBy : DeckEditor.orderProp : reverse">
         <td>
           <button type="button" ng-click="DeckEditor.removeCard(card)">
             <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
