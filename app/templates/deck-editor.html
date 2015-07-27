@@ -1,52 +1,52 @@
-<div ng-controller="DeckEditorController">
-  <a ng-show="isDeckSaved" ng-href="/">Home</a>
-  <div ng-show="deckStatus.totalCards">
-    <p>Cards used: <span ng-bind="deckStatus.totalCards"></span></p>
-    <p ng-show="deckStatus.agendaPoints">
-      Agenda points: <span ng-bind="deckStatus.agendaPoints"></span> (out of either <span ng-bind="deckStatus.requiredAgendaPoints"></span>)</p>
+<div ng-controller="DeckEditorController as DeckEditor">
+  <a ng-show="DeckEditor.isDeckSaved" ng-href="/">Home</a>
+  <div ng-show="DeckEditor.deckStatus.totalCards">
+    <p>Cards used: <span ng-bind="DeckEditor.deckStatus.totalCards"></span></p>
+    <p ng-show="DeckEditor.deckStatus.agendaPoints">
+      Agenda points: <span ng-bind="DeckEditor.deckStatus.agendaPoints"></span> (out of either <span ng-bind="DeckEditor.deckStatus.requiredAgendaPoints"></span>)</p>
     <p>Deck list:</p>
     <ul>
-      <li ng-repeat="(code, entry) in deckStatus.card | filter: entry.quantity">
+      <li ng-repeat="(code, entry) in DeckEditor.deckStatus.card | filter: entry.quantity">
         <span ng-bind="entry.quantity"></span> x <span ng-bind="entry.details.title"></span>
       </li>
     </ul>
   </div>
-  <div ng-hide="deckStatus.totalCards">
+  <div ng-hide="DeckEditor.deckStatus.totalCards">
     <p>Hello! Your deck is empty.</p>
   </div>
-  <label for="save-deck" ng-hide="isDeckSaved">Your deck has unsaved changes</label>
-  <button id="save-deck" type="button" ng-click="saveDeck()">Save it!</button>
-  <button id="revert-deck" type="button" ng-click="revertDeck()" ng-hide="isDeckSaved && !id">Revert</button>
+  <label for="save-deck" ng-hide="DeckEditor.isDeckSaved">Your deck has unsaved changes</label>
+  <button id="save-deck" type="button" ng-click="DeckEditor.saveDeck()" ng-hide="DeckEditor.isDeckSaved">Save it!</button>
+  <button id="revert-deck" type="button" ng-click="DeckEditor.revertDeck()" ng-hide="DeckEditor.isDeckSaved">Revert</button>
 
   <table class="table">
     <thead>
       <tr>
         <th>Quantity</th>
         <th>
-          <span ng-click="reverse = orderProp === 'title' ? !reverse : false; orderProp = 'title';">Title</span>
+          <span ng-click="reverse = DeckEditor.orderProp === 'title' ? !reverse : false; orderProp = 'title';">Title</span>
           <input type="text" ng-model="searchCriteria.title"></input>
         </th>
-        <th ng-click="reverse = orderProp === 'type' ? !reverse : false; orderProp = 'type'">Type</th>
-        <th ng-click="reverse = orderProp === 'subtype' ? !reverse : false; orderProp = 'subtype'">Subtype</th>
-        <th ng-click="reverse = orderProp === 'cost' ? !reverse : false; orderProp = 'cost'">Cost</th>
-        <th ng-click="reverse = orderProp === 'influence' ? !reverse : false; orderProp = 'influence'">Influence</th>
-        <th ng-click="reverse = orderProp === 'faction' ? !reverse : false; orderProp = 'faction'">Faction</th>
+        <th ng-click="reverse = DeckEditor.orderProp === 'type' ? !reverse : false; DeckEditor.orderProp = 'type'">Type</th>
+        <th ng-click="reverse = DeckEditor.orderProp === 'subtype' ? !reverse : false; DeckEditor.orderProp = 'subtype'">Subtype</th>
+        <th ng-click="reverse = DeckEditor.orderProp === 'cost' ? !reverse : false; DeckEditor.orderProp = 'cost'">Cost</th>
+        <th ng-click="reverse = DeckEditor.orderProp === 'influence' ? !reverse : false; DeckEditor.orderProp = 'influence'">Influence</th>
+        <th ng-click="reverse = DeckEditor.orderProp === 'faction' ? !reverse : false; DeckEditor.orderProp = 'faction'">Faction</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="card in allCards | filter: searchCriteria | orderBy : orderProp : reverse">
+      <tr ng-repeat="card in DeckEditor.allCards | filter: searchCriteria | orderBy : DeckEditor.orderProp : reverse">
         <td>
-          <button type="button" ng-click="$parent.removeCard(card)">
+          <button type="button" ng-click="DeckEditor.removeCard(card)">
             <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
             <span class="sr-only">-</span>
           </button>
-          <span ng-bind="$parent.deckStatus.card[card.code].quantity || 0"></span>
-          <button type="button" ng-click="$parent.addCard(card)">
+          <span ng-bind="DeckEditor.deckStatus.card[card.code].quantity || 0"></span>
+          <button type="button" ng-click="DeckEditor.addCard(card)">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             <span class="sr-only">+</span>
           </button>
         </td>
-        <td><span ng-bind="card.title" ng-click="$parent.addCard(card)"></span></td>
+        <td><span ng-bind="card.title" ng-click="DeckEditor.addCard(card)"></span></td>
         <td><span ng-bind="card.type"></span></td>
         <td><span ng-bind="card.subtype"></span></td>
         <td><span ng-bind="card.cost"></span></td>

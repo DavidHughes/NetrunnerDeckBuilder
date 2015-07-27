@@ -1,14 +1,12 @@
 /*global describe, beforeEach, module, inject, it, expect*/
 describe('DeckEditorController', function() {
   'use strict';
-  var scope, newCard, newAgenda;
+  var newCard, newAgenda, controller;
 
   beforeEach(function() {
     module('dataDealer');
-    inject(function($rootScope, $controller) {
-      scope = $rootScope.$new();
-      $controller('DeckEditorController', {
-        $scope: scope,
+    inject(function($controller) {
+      controller = $controller('DeckEditorController', {
         $routeParams: {
           deckId: 1
         }
@@ -30,55 +28,55 @@ describe('DeckEditorController', function() {
   it('can add up to 3 copies of a single card to the current deck', function() {
     var count;
     for (count = 1; count <= 4; count++) {
-      scope.addCard(newCard);
-      expect(scope.deckStatus.totalCards).to.equal(Math.min(count, 3));
-      expect(scope.deckStatus.card[1].quantity).to.equal(Math.min(count, 3));
+      controller.addCard(newCard);
+      expect(controller.deckStatus.totalCards).to.equal(Math.min(count, 3));
+      expect(controller.deckStatus.card[1].quantity).to.equal(Math.min(count, 3));
     }
   });
 
   it('can remove a card from the current deck', function() {
     var count;
     for (count = 0; count < 3; count++) {
-      scope.addCard(newCard);
+      controller.addCard(newCard);
     }
 
     for (count = 2; count >= -2; count--) {
-      scope.removeCard(newCard);
+      controller.removeCard(newCard);
       if (count > 0) {
-        expect(scope.deckStatus.totalCards).to.equal(count);
-        expect(scope.deckStatus.card[1].quantity).to.equal(count);
+        expect(controller.deckStatus.totalCards).to.equal(count);
+        expect(controller.deckStatus.card[1].quantity).to.equal(count);
       } else {
-        expect(scope.deckStatus.totalCards).to.be.empty();
-        expect(scope.deckStatus.card).to.be.empty();
+        expect(controller.deckStatus.totalCards).to.be.empty();
+        expect(controller.deckStatus.card).to.be.empty();
       }
     }
   });
 
   it('monitors agenda points as cards are changed', function() {
-    scope.addCard(newCard);
-    expect(scope.deckStatus.agendaPoints).to.equal(0);
+    controller.addCard(newCard);
+    expect(controller.deckStatus.agendaPoints).to.equal(0);
 
-    scope.addCard(newAgenda);
-    expect(scope.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints);
-    scope.addCard(newAgenda);
-    expect(scope.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints * 2);
-    scope.removeCard(newAgenda);
-    expect(scope.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints);
-    scope.removeCard(newAgenda);
-    expect(scope.deckStatus.agendaPoints).to.equal(0);
+    controller.addCard(newAgenda);
+    expect(controller.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints);
+    controller.addCard(newAgenda);
+    expect(controller.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints * 2);
+    controller.removeCard(newAgenda);
+    expect(controller.deckStatus.agendaPoints).to.equal(newAgenda.agendapoints);
+    controller.removeCard(newAgenda);
+    expect(controller.deckStatus.agendaPoints).to.equal(0);
 
-    scope.removeCard(newCard);
-    expect(scope.deckStatus.agendaPoints).to.equal(0);
+    controller.removeCard(newCard);
+    expect(controller.deckStatus.agendaPoints).to.equal(0);
   });
 
   // it('can retrieve the identities associated with the current deck\'s side', function(done) {
-  //   scope.deckStatus.identity = {
+  //   controller.deckStatus.identity = {
   //     'name': 'Gabriel Santiago',
   //     'faction': 'criminal',
   //     'side': 'runner'
   //   };
 
-  //   scope.fetchRelevantIdentities(function(data) {
+  //   controller.fetchRelevantIdentities(function(data) {
   //     var fetchedRunnerIdentities = data;
   //     expect(fetchedRunnerIdentities.length).to.equal(0);
   //     done();

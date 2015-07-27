@@ -1,50 +1,55 @@
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckEditorController', ['$scope', '$routeParams', '$filter', 'AllCardsService', 'UserDecksService', 'Deck', function($scope, $routeParams, $filter, AllCardsService, UserDecksService, Deck) {
-    $scope.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
+  angular.module('dataDealer').controller('DeckEditorController', ['$routeParams', '$filter', 'AllCardsService', 'UserDecksService', 'Deck', function($routeParams, $filter, AllCardsService, UserDecksService, Deck) {
+    var self = this;
 
-    $scope.orderProp = 'faction';
+    self.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
 
-    $scope.saveDeck = function() {
-      Deck.saveDeck($scope.deckStatus);
-      $scope.isDeckSaved = false;
+    self.isDeckSaved = true;
+
+    self.orderProp = 'faction';
+
+    self.saveDeck = function() {
+      Deck.saveDeck(self.deckStatus);
+      self.isDeckSaved = true;
     };
 
-    $scope.isDeckSaved = true;
-
-    $scope.addCard = function(card) {
-      $scope.deckStatus = Deck.addCard($scope.deckStatus, card);
-      $scope.isDeckSaved = false;
+    self.revertDeck = function() {
+      self.deckStatus = Deck.revertDeck(self.deckStatus);
+      self.isDeckSaved = true;
     };
 
-    $scope.removeCard = function(card) {
-      Deck.removeCard($scope.deckStatus, card);
-      $scope.isDeckSaved = false;
+    self.addCard = function(card) {
+      self.deckStatus = Deck.addCard(self.deckStatus, card);
+      self.isDeckSaved = false;
     };
 
-    $scope.updateCardCount = function() {
-      var totalCards = Deck.fetchCardCount($scope.deckStatus);
-
-      $scope.deckStatus.totalCards = totalCards;
-      $scope.deckStatus.requiredAgendaPoints = $scope.getRequiredAgendaPoints($scope.deckStatus);
-
-      $scope.isDeckSaved = false;
+    self.removeCard = function(card) {
+      Deck.removeCard(self.deckStatus, card);
+      self.isDeckSaved = false;
     };
 
-    $scope.updateAgendaPoints = function(agendaPoints, isDecreased) {
-      $scope.deckStatus.agendaPoints = Deck.updateAgendaPoints($scope.deckStatus, agendaPoints, isDecreased);
+    self.updateCardCount = function() {
+      var totalCards = Deck.fetchCardCount(self.deckStatus);
+
+      self.deckStatus.totalCards = totalCards;
+      self.deckStatus.requiredAgendaPoints = self.getRequiredAgendaPoints(self.deckStatus);
     };
 
-    $scope.getRequiredAgendaPoints = function() {
-      var requiredAgendaPoints = Deck.fetchRequiredAgendaPoints($scope.deckStatus);
+    self.updateAgendaPoints = function(agendaPoints, isDecreased) {
+      self.deckStatus.agendaPoints = Deck.updateAgendaPoints(self.deckStatus, agendaPoints, isDecreased);
+    };
 
-      $scope.deckStatus.requiredAgendaPoints = requiredAgendaPoints;
+    self.getRequiredAgendaPoints = function() {
+      var requiredAgendaPoints = Deck.fetchRequiredAgendaPoints(self.deckStatus);
+
+      self.deckStatus.requiredAgendaPoints = requiredAgendaPoints;
     };
 
     /**
      * @deprecated
      */
-    $scope.fetchRelevantIdentities = function(side, callback) {
+    self.fetchRelevantIdentities = function(side, callback) {
       switch (side) {
         case 'runner':
         AllCardsService.getRunnerIdentities(function(data) {
@@ -66,11 +71,11 @@
     // Load in all the cards.
     AllCardsService.getAllCards(function(data) {
       var searchResults;
-      $scope.allCards = data.netrunnerCards;
+      self.allCards = data.netrunnerCards;
 
       if ($routeParams.identityId) {
-        searchResults = $filter('filter')($scope.allCards, { code: $routeParams.identityId }, true);
-        $scope.deckStatus.identity = searchResults.length ? searchResults[0] : null;
+        searchResults = $filter('filter')(self.allCards, { code: $routeParams.identityId }, true);
+        self.deckStatus.identity = searchResults.length ? searchResults[0] : null;
       }
     });
   }]);
