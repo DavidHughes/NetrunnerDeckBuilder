@@ -2,29 +2,28 @@
 describe('AllCardsService', function() {
   'use strict';
   var someCards = {
-    'netrunnerCards': [
-      {
-        'type': 'Identity',
-        'title': 'Noise: Hacker Extraordinaire',
-        'side': 'Runner'
-      },
-      {
-        'type': 'Identity',
-        'title': 'Jinteki: Personal Evolution',
-        'side': 'Corp'
-      },
-      {
-        'type': 'Resource',
-        'title': 'Aesop\'s Pawnshop',
-        'side': 'Runner'
-      },
-      {
-        'type': 'Upgrade',
-        'title': 'Corporate Troubleshooter',
-        'side': 'Corp'
-      }
-    ]
-  }, httpBackend, mockCardsDatabase, AllCardsService;
+    netrunnerCards: [
+    {
+      type: 'Identity',
+      title: 'Noise: Hacker Extraordinaire',
+      side: 'Runner'
+    },
+    {
+      type: 'Identity',
+      title: 'Jinteki: Personal Evolution',
+      side: 'Corp'
+    },
+    {
+      type: 'Resource',
+      title: 'Aesop\'s Pawnshop',
+      side: 'Runner'
+    },
+    {
+      type: 'Upgrade',
+      title: 'Corporate Troubleshooter',
+      side: 'Corp'
+    }
+  ]}, httpBackend, mockCardsDatabase, AllCardsService;
 
   beforeEach(module('dataDealer'));
   beforeEach(inject(function(_AllCardsService_, $httpBackend, _CardsDatabase_) {
@@ -41,10 +40,16 @@ describe('AllCardsService', function() {
     });
 
     it('can retrieve all cards', function (done) {
-      AllCardsService.getAllCards(function(data) {
-        expect(data).to.deep.equal(someCards);
-        done();
+      AllCardsService.getAllCards().then(function(allCards) {
+        try {
+          expect(allCards).to.deep.equal(someCards.netrunnerCards);
+          done();
+        }
+        catch (exception) {
+          done(exception);
+        }
       });
+
       httpBackend.flush();
     });
   });
