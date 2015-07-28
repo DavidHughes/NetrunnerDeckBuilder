@@ -232,9 +232,9 @@
       var usedCards = Object.keys(deck.card),
         quantity = 0;
 
-      for (var code in usedCards) {
-        quantity += deck.card[usedCards[code]].quantity;
-      }
+      usedCards.forEach(function(currentCard){
+        quantity += deck.card[currentCard].quantity;
+      });
 
       return quantity;
     };

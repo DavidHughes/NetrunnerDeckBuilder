@@ -118,9 +118,9 @@
       var usedCards = Object.keys(deck.card),
         quantity = 0;
 
-      for (var code in usedCards) {
-        quantity += deck.card[usedCards[code]].quantity;
-      }
+      usedCards.forEach(function(currentCard){
+        quantity += deck.card[currentCard].quantity;
+      });
 
       return quantity;
     };
@@ -134,14 +134,12 @@
     var fetchAgendaPoints = function(deck) {
       var agendaPoints = 0;
       var usedCards = Object.keys(deck.card);
-      var currentCard;
 
-      for (var code in usedCards) {
-        currentCard = usedCards[code];
+      usedCards.forEach(function(currentCard) {
         if (deck.card[currentCard].details.type === 'Agenda') {
           agendaPoints += deck.card[currentCard].details.agendapoints * deck.card[currentCard].quantity;
         }
-      }
+      });
 
       return agendaPoints;
     };
