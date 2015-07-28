@@ -9,6 +9,8 @@
 
     self.orderProp = 'faction';
 
+    self.reverse = false;
+
     self.saveDeck = function() {
       Deck.saveDeck(self.deckStatus);
       self.isDeckSaved = true;

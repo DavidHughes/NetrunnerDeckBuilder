@@ -164,9 +164,12 @@ module.exports = function (grunt) {
           ],
           '<%= config.app %>/scripts/build/services/ngAnnotated.js': [
             '<%= config.app %>/scripts/src/services/*.js'
+          ],
+          '<%= config.app %>/scripts/build/directives/ngAnnotated.js': [
+            '<%= config.app %>/scripts/src/directives/*.js'
           ]
         }
-      },
+      }
     },
     // Mocha testing framework configuration options
     mocha: {
@@ -316,7 +319,8 @@ module.exports = function (grunt) {
           'app/scripts/build/config/*.js',
           'app/scripts/build/services/*.js',
           'app/scripts/build/factories/*.js',
-          'app/scripts/build/controllers/*.js'
+          'app/scripts/build/controllers/*.js',
+          'app/scripts/build/directives/*.js',
         ],
         dest: 'app/scripts/main.js'
       }

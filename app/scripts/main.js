@@ -248,14 +248,12 @@
     var fetchAgendaPoints = function(deck) {
       var agendaPoints = 0;
       var usedCards = Object.keys(deck.card);
-      var currentCard;
 
-      for (var code in usedCards) {
-        currentCard = usedCards[code];
+      usedCards.forEach(function(currentCard) {
         if (deck.card[currentCard].details.type === 'Agenda') {
           agendaPoints += deck.card[currentCard].details.agendapoints * deck.card[currentCard].quantity;
         }
-      }
+      });
 
       return agendaPoints;
     };
@@ -301,6 +299,8 @@
     self.isDeckSaved = true;
 
     self.orderProp = 'faction';
+
+    self.reverse = false;
 
     self.saveDeck = function() {
       Deck.saveDeck(self.deckStatus);
@@ -357,4 +357,28 @@
       }
     };
   }]);
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('dataDealer').directive('cardOrder', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, elem, attrs) {
+        elem.bind('click', function () {
+          if (scope.DeckEditor.orderProp === attrs.cardOrder) {
+            scope.$apply(
+              scope.DeckEditor.reverse = !scope.DeckEditor.reverse
+            );
+          } else {
+            scope.$apply(function() {
+              scope.DeckEditor.orderProp = attrs.cardOrder;
+              scope.DeckEditor.reverse = false;
+            });
+          }
+        });
+      }
+    };
+  });
 })();
