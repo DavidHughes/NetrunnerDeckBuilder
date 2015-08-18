@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  angular.module('dataDealer').controller('DeckEditorController', function($routeParams, AllCardsService, UserDecksService, Deck) {
+  angular.module('dataDealer').controller('DeckEditorController', function($routeParams, $location, AllCardsService, UserDecksService, Deck) {
     var self = this;
 
     self.deckStatus = UserDecksService.buildDeck($routeParams.deckId);
@@ -11,8 +11,19 @@
 
     self.reverse = false;
 
-    self.saveDeck = function() {
-      Deck.saveDeck(self.deckStatus);
+    /**
+     * Saves a deck, optionally redirecting to the edit page for that deck.
+     *
+     * @param {bool} andEdit
+     *  If true, redirects to the edit page for the deck.
+     */
+    self.saveDeck = function(andEdit) {
+      self.deckStatus = Deck.saveDeck(self.deckStatus);
+      if (andEdit) {
+        $location.path('/deck/edit/' + self.deckStatus.id);
+        return;
+      }
+
       self.isDeckSaved = true;
     };
 

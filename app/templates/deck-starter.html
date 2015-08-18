@@ -1,20 +1,14 @@
 <div ng-controller="DeckEditorController as DeckEditor">
-  <div ng-hide="DeckEditor.deckStatus.identity.name">
-    <div ng-show="!DeckEditor.deckStatus.identity.side">
-      <p>Are you a CORP or RUNNER?</p>
-      <button ng-click="DeckEditor.deckStatus.identity.side='corp'">CORP</button>
-      <button ng-click="DeckEditor.deckStatus.identity.side='runner'">RUNNER</button>
-    </div>
-    <div ng-show="DeckEditor.deckStatus.identity.side && !DeckEditor.deckStatus.identity.title">
-      <p>Who are you building a deck as today?</p>
-      <select ng-model="identity" ng-options="card as card.title for card in DeckEditor.allCards | filter: { type: 'Identity', side: DeckEditor.deckStatus.identity.side } | orderBy: 'faction'" />
-      <button ng-click="DeckEditor.deckStatus.identity = identity">Hit me up!</button>
-      <hr />
-      <button ng-click="DeckEditor.deckStatus.identity.side = ''">&lt; Back</button>
-    </div>
+  <div ng-hide="DeckEditor.deckStatus.identity.side">
+    <p>Are you a CORP or RUNNER?</p>
+    <button ng-click="DeckEditor.deckStatus.identity.side='corp'">CORP</button>
+    <button ng-click="DeckEditor.deckStatus.identity.side='runner'">RUNNER</button>
   </div>
-  <div ng-show="DeckEditor.deckStatus.identity.title">
-    <p>Good morning, {{ DeckEditor.deckStatus.identity.title }}</p>
-    <a ng-href="/deck/edit/from/{{ DeckEditor.deckStatus.identity.code }}">Get hacking!</a>
+  <div ng-show="DeckEditor.deckStatus.identity.side">
+    <p>Who are you building a deck as today?</p>
+    <select ng-model="DeckEditor.deckStatus.identity" ng-options="card as card.title for card in DeckEditor.allCards | filter: { type: 'Identity', side: DeckEditor.deckStatus.identity.side } | orderBy: 'faction'" />
+    <button ng-click="DeckEditor.saveDeck(true)">Hit me up!</button>
+    <hr />
+    <button ng-click="DeckEditor.deckStatus.identity.side = ''">&lt; Back</button>
   </div>
 </div>
