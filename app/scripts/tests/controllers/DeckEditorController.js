@@ -1,17 +1,11 @@
 /*global describe, beforeEach, module, inject, it, expect*/
 describe('DeckEditorController', function() {
   'use strict';
-  var newCard, newAgenda, controller;
+  var newCard, newAgenda, controller, routeParams, runnerId, corpId;
 
   beforeEach(function() {
     module('dataDealer');
-    inject(function($controller) {
-      controller = $controller('DeckEditorController', {
-        $routeParams: {
-          deckId: 1
-        }
-      });
-    });
+
     newCard = {
       'type': 'Upgrade',
       'title': 'Corporate Troubleshooter',
@@ -23,6 +17,25 @@ describe('DeckEditorController', function() {
       'title': 'AstroScript Pilot Program',
       'agendapoints': 2
     };
+    corpId = {
+      type: 'Identity',
+      name: 'NBN Test',
+      side: 'Corp'
+    };
+    runnerId = {
+      type: 'Identity',
+      name: 'Anarch Test',
+      side: 'Runner'
+    };
+    routeParams = {
+      deckId: 1
+    };
+
+    inject(function($controller) {
+      controller = $controller('DeckEditorController', {
+        $routeParams: routeParams
+      });
+    });
   });
 
   it('can add up to 3 copies of a single card to the current deck', function() {
@@ -67,5 +80,12 @@ describe('DeckEditorController', function() {
 
     controller.removeCard(newCard);
     expect(controller.deckStatus.agendaPoints).to.equal(0);
+  });
+
+  it('shows only cards on the same side as the deck identity', function() {
+    controller.setIdentity(corpId);
+    expect(controller.searchCriteria.side).to.equal(corpId.side);
+    controller.setIdentity(runnerId);
+    expect(controller.searchCriteria.side).to.equal(runnerId.side);
   });
 });

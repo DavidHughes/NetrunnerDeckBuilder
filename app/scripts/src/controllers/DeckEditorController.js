@@ -59,6 +59,21 @@
       self.deckStatus.requiredAgendaPoints = requiredAgendaPoints;
     };
 
+    self.setIdentity = function(identity) {
+      self.deckStatus.identity = identity;
+      self.searchCriteria.side = self.deckStatus.identity.side;
+    };
+
     self.allCards = AllCardsService.allCards;
+
+    self.searchCriteria = {
+      type: '!Identity'
+    };
+
+    // If identity exists on controller initialisation, ensure that identity
+    // is set properly.
+    if (self.deckStatus.identity) {
+      self.setIdentity(self.deckStatus.identity);
+    }
   });
 })();
