@@ -334,15 +334,8 @@
     };
 
     self.removeCard = function(card) {
-      Deck.removeCard(self.deckStatus, card);
+      self.deckStatus = Deck.removeCard(self.deckStatus, card);
       self.isDeckSaved = false;
-    };
-
-    self.updateCardCount = function() {
-      var totalCards = Deck.fetchCardCount(self.deckStatus);
-
-      self.deckStatus.totalCards = totalCards;
-      self.deckStatus.requiredAgendaPoints = self.getRequiredAgendaPoints(self.deckStatus);
     };
 
     self.updateAgendaPoints = function(agendaPoints, isDecreased) {
