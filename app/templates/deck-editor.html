@@ -1,5 +1,8 @@
 <div ng-controller="DeckEditorController as DeckEditor">
   <a ng-show="DeckEditor.isDeckSaved" ng-href="/">Home</a>
+  <div>
+    <p><strong>Identity: </strong> <span ng-bind="DeckEditor.deckStatus.identity.title"></span></p>
+  </div>
   <div ng-show="DeckEditor.deckStatus.totalCards">
     <p>Cards used: <span ng-bind="DeckEditor.deckStatus.totalCards"></span></p>
     <p ng-show="DeckEditor.deckStatus.agendaPoints">
