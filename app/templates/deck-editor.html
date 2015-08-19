@@ -28,12 +28,13 @@
         <th>
           <span data-card-order="title">Title</span>
           <input type="text" ng-model="DeckEditor.searchCriteria.title" />
+          <order-icon order-on="title"></order-icon>
         </th>
-        <th data-card-order="type">Type</th>
-        <th data-card-order="subtype">Subtype</th>
-        <th data-card-order="cost">Cost</th>
-        <th data-card-order="influence">Influence</th>
-        <th data-card-order="faction">Faction</th>
+        <th data-card-order="type">Type <order-icon order-on="type"></order-icon></th>
+        <th data-card-order="subtype">Subtype <order-icon order-on="subtype"></order-icon></th>
+        <th data-card-order="cost">Cost <order-icon order-on="cost"></order-icon></th>
+        <th data-card-order="influence">Influence <order-icon order-on="influence"></order-icon></th>
+        <th data-card-order="faction">Faction <order-icon order-on="faction"></order-icon></th>
       </tr>
     </thead>
     <tbody>

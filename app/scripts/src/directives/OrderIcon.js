@@ -31,16 +31,17 @@
 
     return {
       restrict: 'E',
+      scope: true,
       link: function($scope, $element, $attr) {
         $scope.classes = fetchClasses({
           facet: $scope.DeckEditor.orderProp,
-          reversed: $scope.DeckEditor.reversed
+          reversed: $scope.DeckEditor.reverse
         }, $attr.orderOn);
 
         $scope.$watch(function($scope) {
           return {
             facet: $scope.DeckEditor.orderProp,
-            reversed: $scope.DeckEditor.reversed
+            reversed: $scope.DeckEditor.reverse
           };
         }, function(currentOrdering) {
           $scope.classes = fetchClasses(currentOrdering, $attr.orderOn);
